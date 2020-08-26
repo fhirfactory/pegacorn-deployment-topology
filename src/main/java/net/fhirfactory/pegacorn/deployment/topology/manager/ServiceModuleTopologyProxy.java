@@ -55,7 +55,7 @@ import net.fhirfactory.pegacorn.petasos.topology.manager.TopologyIM;
  *
  */
 @ApplicationScoped
-abstract public class ServiceModuleTopologyProxy {
+public class ServiceModuleTopologyProxy {
 
     private static final Logger LOG = LoggerFactory.getLogger(ServiceModuleTopologyProxy.class);
 
