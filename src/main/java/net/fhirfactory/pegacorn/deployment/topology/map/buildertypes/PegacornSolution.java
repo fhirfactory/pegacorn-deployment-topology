@@ -31,11 +31,13 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import net.fhirfactory.pegacorn.deployment.topology.manager.TopologyMapElementServices;
+import net.fhirfactory.pegacorn.deployment.topology.initialiser.TopologyMapElementTransformationServices;
 import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeElement;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.NodeElementTypeEnum;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -43,6 +45,8 @@ import net.fhirfactory.pegacorn.petasos.model.topology.NodeElementTypeEnum;
  *
  */
 public abstract class PegacornSolution {
+	private static final Logger LOG = LoggerFactory.getLogger(PegacornSolution.class);
+
     protected DeploymentMapNodeElement solution;
     private String solutionName;
     private String solutionVersion;
@@ -50,16 +54,20 @@ public abstract class PegacornSolution {
     protected Set<DeploymentMapNodeElement> connectedSubsystems;
     
     @Inject
-    TopologyMapElementServices topologyMapService;
+	TopologyMapElementTransformationServices topologyMapService;
     
-    public PegacornSolution(String solutionName, String solutionVersion, ResilienceModeEnum mode){
-        this.solutionName = solutionName;
-        this.solutionVersion = solutionVersion;
+    public PegacornSolution(){
+    	LOG.debug(".PegacornSolution(): Entry, Constructor called!");
+        this.solutionName = specifySolutionName();
+        this.solutionVersion = specifySolutionVersion();
+        this.solutionMode = specifyResilienceMode();
         this.connectedSubsystems = new HashSet<DeploymentMapNodeElement>();
+		LOG.debug(".PegacornSolution(): Exit, this.solutionName --> {}", this.solutionName);
     }
     
     @PostConstruct
     public void initialise(){
+		LOG.debug(".initialise(): Entry");
         this.solution = buildSolution();
         
         buildFHIRBreak();
@@ -76,8 +84,13 @@ public abstract class PegacornSolution {
         topologyMapService.registerAsNodeElement(this.getSolution(), null, null);
         for(DeploymentMapNodeElement node: connectedSubsystems) {
         	topologyMapService.registerAsNodeElement(node, null, null);
-        } 
+        }
+		LOG.debug(".initialise(): Exit");
     }
+
+    abstract protected String specifySolutionName();
+    abstract protected String specifySolutionVersion();
+    abstract protected ResilienceModeEnum specifyResilienceMode();
     
     abstract protected void specifyCommunicateExternalisedServices(DeploymentMapNodeElement subsystem);
     abstract protected void specifyMITaFExternalisedServices(DeploymentMapNodeElement subsystem);

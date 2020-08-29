@@ -21,9 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.defaultmap;
+package net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.sample;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.CommunicateExternalisedService;
+import net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.FHIRBreakExternalisedService;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.EndpointElementTypeEnum;
@@ -35,26 +40,14 @@ import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeE
  *
  * @author Mark A. Hunter
  */
-public class BuildFHIRBreakMap {
+public class BuildFHIRBreakMap extends FHIRBreakExternalisedService {
 
     String nodeFHIRBreak = "FHIRBreak";
     String nodeFHIRBreakGen0 = "gen0-fhirbreak";
     String nodeFHIRBreakGen1 = "gen1-fhirbreak";
 
-    public void createFHIRBreakNode(DeploymentMapNodeElement solutionNode) {
-        DeploymentMapNodeElement fhirBreakInstance = new DeploymentMapNodeElement();
-        fhirBreakInstance.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
-        fhirBreakInstance.setElementVersion("0.0.1");
-        fhirBreakInstance.setInstanceName(nodeFHIRBreak);
-        fhirBreakInstance.setFunctionName(nodeFHIRBreak);
-        fhirBreakInstance.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
-        fhirBreakInstance.setTopologyElementType(NodeElementTypeEnum.SUBSYSTEM);
-        fhirBreakInstance.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
-        solutionNode.getContainedElements().add(fhirBreakInstance);
-        createFHIRBreakExternalServices(fhirBreakInstance);
-    }
-
-    public void createFHIRBreakExternalServices(DeploymentMapNodeElement fhirbreakNode) {
+    @Override
+    public void buildExternalisedServiceNode(DeploymentMapNodeElement fhirbreakNode) {
         DeploymentMapNodeElement fhirBreakGen0Instance = new DeploymentMapNodeElement();
         fhirBreakGen0Instance.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
         fhirBreakGen0Instance.setElementVersion("0.0.1");
@@ -263,4 +256,10 @@ public class BuildFHIRBreakMap {
         endpointEndReceiveCommunication.setRequiresEncryption(false);
         nodeEdgeReceive.getEndpoints().add(endpointEndReceiveCommunication);
     }
+
+    @Override
+    public Set<DeploymentMapNodeElement> buildConnectedSystemSet() {
+        return(new HashSet<DeploymentMapNodeElement>());
+    }
+
 }

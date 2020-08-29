@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.manager;
+package net.fhirfactory.pegacorn.deployment.topology.initialiser;
 
 import java.util.Iterator;
 import javax.enterprise.context.ApplicationScoped;
@@ -42,9 +42,9 @@ import org.slf4j.LoggerFactory;
  * @author Mark A. Hunter
  */
 @ApplicationScoped
-public class TopologyMapElementServices {
+public class TopologyMapElementTransformationServices {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TopologyMapElementServices.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TopologyMapElementTransformationServices.class);
 
     @Inject
     TopologyIM topologyInformationManager;

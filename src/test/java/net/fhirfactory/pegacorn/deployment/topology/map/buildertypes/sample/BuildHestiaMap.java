@@ -21,9 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.defaultmap;
+package net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.sample;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.HestiaExternalisedService;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.NodeElementTypeEnum;
@@ -33,27 +37,14 @@ import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeE
  *
  * @author Mark A. Hunter
  */
-public class BuildHestiaMap {
+public class BuildHestiaMap extends HestiaExternalisedService {
 
     String nodeHestia = "Hestia";
     String nodeHestiaAudit = "audit-hestia";
     String nodeHestiaDAM = "dam-hestia";
 
-    public void createHestiaNode(DeploymentMapNodeElement solutionNode) {
-
-        DeploymentMapNodeElement hestiaInstance = new DeploymentMapNodeElement();
-        hestiaInstance.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
-        hestiaInstance.setElementVersion("0.0.1");
-        hestiaInstance.setInstanceName(nodeHestia);
-        hestiaInstance.setFunctionName(nodeHestia);
-        hestiaInstance.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
-        hestiaInstance.setTopologyElementType(NodeElementTypeEnum.SUBSYSTEM);
-        hestiaInstance.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
-        solutionNode.getContainedElements().add(hestiaInstance);
-        createHestiaServices(hestiaInstance);
-    }
-
-    public void createHestiaServices(DeploymentMapNodeElement hestiaNode) {
+    @Override
+    public void buildExternalisedServiceNode(DeploymentMapNodeElement hestiaNode) {
         DeploymentMapNodeElement hestiaDAMInstance = new DeploymentMapNodeElement();
         hestiaDAMInstance.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
         hestiaDAMInstance.setElementVersion("0.0.1");
@@ -74,4 +65,10 @@ public class BuildHestiaMap {
         hestiaAduditInstance.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
         hestiaNode.getContainedElements().add(hestiaAduditInstance);
     }
+
+    @Override
+    public Set<DeploymentMapNodeElement> buildConnectedSystemSet() {
+        return(new HashSet<DeploymentMapNodeElement>());
+    }
+
 }

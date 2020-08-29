@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -55,12 +56,22 @@ import net.fhirfactory.pegacorn.petasos.topology.manager.TopologyIM;
  *
  */
 @ApplicationScoped
-public class ServiceModuleTopologyProxy {
+public class DeploymentTopologyIM {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ServiceModuleTopologyProxy.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DeploymentTopologyIM.class);
+    private boolean isInitialised;
 
     @Inject
     TopologyIM topologyManager;
+
+    public DeploymentTopologyIM(){
+        this.isInitialised = false;
+    }
+
+    @PostConstruct
+    public void initialise(){
+
+    }
     
     private static final Integer WUA_RETRY_LIMIT = 3;
     private static final Integer WUA_TIMEOUT_LIMIT = 10000; // 10 Seconds

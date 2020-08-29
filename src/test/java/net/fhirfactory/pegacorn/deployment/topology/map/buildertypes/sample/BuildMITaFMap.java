@@ -21,9 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.defaultmap;
+package net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.sample;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.MITaFExternalisedService;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.NodeElementTypeEnum;
@@ -33,26 +37,14 @@ import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeE
  *
  * @author Mark A. Hunter
  */
-public class BuildMITaFMap {
+public class BuildMITaFMap extends MITaFExternalisedService {
 
     String nodeMITaFText = "MITaF";
     String nodeMITaFGen0Text = "gen0-mitaf";
     String nodeMITaFGen1Text = "gen1-mitaf";
-    
-    public void createMITaFNode(DeploymentMapNodeElement solutionNode) {
-        DeploymentMapNodeElement mitafNode = new DeploymentMapNodeElement();
-        mitafNode.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
-        mitafNode.setElementVersion("0.0.1");
-        mitafNode.setInstanceName(nodeMITaFText);
-        mitafNode.setFunctionName(nodeMITaFText);
-        mitafNode.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
-        mitafNode.setTopologyElementType(NodeElementTypeEnum.SUBSYSTEM);
-        mitafNode.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
-        solutionNode.getContainedElements().add(mitafNode);
-        createMITaFServices(mitafNode);
-    }
 
-    public void createMITaFServices(DeploymentMapNodeElement mitafNode) {
+    @Override
+    public void buildExternalisedServiceNode(DeploymentMapNodeElement mitafNode) {
         DeploymentMapNodeElement mitafGen0ServiceNode = new DeploymentMapNodeElement();
         mitafGen0ServiceNode.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
         mitafGen0ServiceNode.setElementVersion("0.0.1");
@@ -73,4 +65,10 @@ public class BuildMITaFMap {
         mitafGen1ServiceNode.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
         mitafNode.getContainedElements().add(mitafGen1ServiceNode);
     }
+
+    @Override
+    public Set<DeploymentMapNodeElement> buildConnectedSystemSet() {
+        return(new HashSet<DeploymentMapNodeElement>());
+    }
+
 }

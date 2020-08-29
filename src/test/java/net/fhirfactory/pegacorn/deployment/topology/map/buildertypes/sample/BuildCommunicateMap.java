@@ -21,43 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.defaultmap;
+package net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.sample;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.CommunicateExternalisedService;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.EndpointElementTypeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.NodeElementTypeEnum;
 import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapEndpointElement;
 import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Mark A. Hunter
  */
-public class BuildCommunicateMap {
+public class BuildCommunicateMap extends CommunicateExternalisedService {
+    private static final Logger LOG = LoggerFactory.getLogger(BuildCommunicateMap.class);
 
     String nodeCommunicate = "Comunicate";
-    String nodeGrpServer = "grpsvr-communicate";
-    String nodeAVConferenceServer = "avconfsvr-communicate";
-    String nodeAVBridge = "avbridge-communicate";
-    String nodeEcho = "echo-communicate";
-    String nodeIris = "iris-communicate";
+    String nodeGrpServer = "Communicate-GrpChatSvr";
+    String nodeAVConferenceServer = "Communicate-AVConfSvr";
+    String nodeAVBridge = "Communicate-AVBridge";
+    String nodeEcho = "Communicate-Echo";
+    String nodeIris = "Communicate-Iris";
 
-    public void createCommunicateNode(DeploymentMapNodeElement solutionNode) {
-        DeploymentMapNodeElement communicateInstance = new DeploymentMapNodeElement();
-        communicateInstance.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
-        communicateInstance.setElementVersion("0.0.1");
-        communicateInstance.setInstanceName(nodeCommunicate);
-        communicateInstance.setFunctionName(nodeCommunicate);
-        communicateInstance.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
-        communicateInstance.setTopologyElementType(NodeElementTypeEnum.SUBSYSTEM);
-        communicateInstance.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
-        solutionNode.getContainedElements().add(communicateInstance);
-        createCommunicateExternalisedServices(communicateInstance);
-    }
-
-    public void createCommunicateExternalisedServices(DeploymentMapNodeElement communicateNode) {
+    @Override
+    public void buildExternalisedServiceNode(DeploymentMapNodeElement communicateNode) {
+        LOG.debug(".buildExternalisedServiceNode(): Entry");
         DeploymentMapNodeElement echoServer = new DeploymentMapNodeElement();
         echoServer.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
         echoServer.setElementVersion("0.0.1");
@@ -66,6 +62,7 @@ public class BuildCommunicateMap {
         echoServer.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
         echoServer.setTopologyElementType(NodeElementTypeEnum.EXTERNALISED_SERVICE);
         echoServer.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
+        LOG.trace(".buildExternalisedServiceNode(): Adding echoServer (DeploymentMapNodeElement) --> {}", echoServer);
         communicateNode.getContainedElements().add(echoServer);
 
         DeploymentMapNodeElement avBridgeServer = new DeploymentMapNodeElement();
@@ -348,6 +345,11 @@ public class BuildCommunicateMap {
         endpointIrisEdgeReceive.setIsServer(true);
         endpointIrisEdgeReceive.setRequiresEncryption(false);
         nodeIrisEdgeReceive.getEndpoints().add(endpointIrisEdgeReceive);
+    }
+
+    @Override
+    public Set<DeploymentMapNodeElement> buildConnectedSystemSet() {
+        return(new HashSet<DeploymentMapNodeElement>());
     }
 
 }

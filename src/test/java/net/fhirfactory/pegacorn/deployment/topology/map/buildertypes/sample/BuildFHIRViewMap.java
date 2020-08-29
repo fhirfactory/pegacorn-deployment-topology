@@ -21,9 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.defaultmap;
+package net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.sample;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.FHIRViewExternalisedService;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.NodeElementTypeEnum;
@@ -33,26 +37,14 @@ import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeE
  *
  * @author Mark A. Hunter
  */
-public class BuildFHIRViewMap {
+public class BuildFHIRViewMap extends FHIRViewExternalisedService {
 
     String nodeFHIRView = "FHIRView";
     String nodeFHIRViewGen0 = "gen0-fhirview";
     String nodeFHIRViewGen1 = "gen1-fhirview";
-    
-    public void createFHIRViewNode(DeploymentMapNodeElement solutionNode) {
-        DeploymentMapNodeElement fhirViewNode = new DeploymentMapNodeElement();
-        fhirViewNode.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
-        fhirViewNode.setElementVersion("0.0.1");
-        fhirViewNode.setInstanceName(nodeFHIRView);
-        fhirViewNode.setFunctionName(nodeFHIRView);
-        fhirViewNode.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
-        fhirViewNode.setTopologyElementType(NodeElementTypeEnum.SUBSYSTEM);
-        fhirViewNode.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
-        solutionNode.getContainedElements().add(fhirViewNode);
-        createFHIRViewServices(fhirViewNode);
-    }
 
-    public void createFHIRViewServices(DeploymentMapNodeElement fhirbreakNode) {
+    @Override
+    public void buildExternalisedServiceNode(DeploymentMapNodeElement fhirviewNode) {
         DeploymentMapNodeElement fhirvewGen0Node = new DeploymentMapNodeElement();
         fhirvewGen0Node.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
         fhirvewGen0Node.setElementVersion("0.0.1");
@@ -61,7 +53,7 @@ public class BuildFHIRViewMap {
         fhirvewGen0Node.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
         fhirvewGen0Node.setTopologyElementType(NodeElementTypeEnum.EXTERNALISED_SERVICE);
         fhirvewGen0Node.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
-        fhirbreakNode.getContainedElements().add(fhirvewGen0Node);
+        fhirviewNode.getContainedElements().add(fhirvewGen0Node);
 
         DeploymentMapNodeElement fhirvewGen1Node = new DeploymentMapNodeElement();
         fhirvewGen1Node.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
@@ -71,6 +63,12 @@ public class BuildFHIRViewMap {
         fhirvewGen1Node.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
         fhirvewGen1Node.setTopologyElementType(NodeElementTypeEnum.EXTERNALISED_SERVICE);
         fhirvewGen1Node.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
-        fhirbreakNode.getContainedElements().add(fhirvewGen1Node);
+        fhirviewNode.getContainedElements().add(fhirvewGen1Node);
     }
+
+    @Override
+    public Set<DeploymentMapNodeElement> buildConnectedSystemSet() {
+        return(new HashSet<DeploymentMapNodeElement>());
+    }
+
 }

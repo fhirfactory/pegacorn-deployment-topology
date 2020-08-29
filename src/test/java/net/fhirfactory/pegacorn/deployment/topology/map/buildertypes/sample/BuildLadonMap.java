@@ -21,9 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.defaultmap;
+package net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.sample;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.LadonExternalisedServices;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.EndpointElementTypeEnum;
@@ -35,25 +39,13 @@ import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeE
  *
  * @author Mark A. Hunter
  */
-public class BuildLadonMap {
+public class BuildLadonMap extends LadonExternalisedServices {
 
     String nodeLadonText = "Ladon";
     String nodeLadonGen0Text = "gen0-ladon";
 
-    public void createLadonNode(DeploymentMapNodeElement solutionNode) {
-        DeploymentMapNodeElement ladonNode = new DeploymentMapNodeElement();
-        ladonNode.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
-        ladonNode.setElementVersion("0.0.1");
-        ladonNode.setInstanceName(nodeLadonText);
-        ladonNode.setFunctionName(nodeLadonText);
-        ladonNode.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
-        ladonNode.setTopologyElementType(NodeElementTypeEnum.SUBSYSTEM);
-        ladonNode.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
-        solutionNode.getContainedElements().add(ladonNode);
-        createLadonExternalServices(ladonNode);
-    }
-
-    public void createLadonExternalServices(DeploymentMapNodeElement ladonNode) {
+    @Override
+    public void buildExternalisedServiceNode(DeploymentMapNodeElement ladonNode) {
         DeploymentMapNodeElement gen0LadonServiceNode = new DeploymentMapNodeElement();
         gen0LadonServiceNode.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
         gen0LadonServiceNode.setElementVersion("0.0.1");
@@ -193,4 +185,10 @@ public class BuildLadonMap {
         endpointEndReceiveCommunication.setRequiresEncryption(false);
         nodeEdgeReceive.getEndpoints().add(endpointEndReceiveCommunication);
     }
+
+    @Override
+    public Set<DeploymentMapNodeElement> buildConnectedSystemSet() {
+        return(new HashSet<DeploymentMapNodeElement>());
+    }
+
 }

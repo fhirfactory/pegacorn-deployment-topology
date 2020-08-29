@@ -21,9 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.defaultmap;
+package net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.sample;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.FHIRPitExternalisedService;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.NodeElementTypeEnum;
@@ -33,26 +37,14 @@ import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeE
  *
  * @author Mark A. Hunter
  */
-public class BuildFHIRPitMap {
+public class BuildFHIRPitMap extends FHIRPitExternalisedService {
 
     String nodeFHIRPitText = "FHIRPit";
     String nodeFHIRPitGen0Text = "gen0-fhirbreak";
     String NodeFHIRPitGen1Text = "gen1-fhirbreak";
-    
-    public void createFHIRPitNode(DeploymentMapNodeElement solutionNode) {
-        DeploymentMapNodeElement fhirBreakInstance = new DeploymentMapNodeElement();
-        fhirBreakInstance.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
-        fhirBreakInstance.setElementVersion("0.0.1");
-        fhirBreakInstance.setInstanceName(nodeFHIRPitText);
-        fhirBreakInstance.setFunctionName(nodeFHIRPitText);
-        fhirBreakInstance.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
-        fhirBreakInstance.setTopologyElementType(NodeElementTypeEnum.SUBSYSTEM);
-        fhirBreakInstance.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
-        solutionNode.getContainedElements().add(fhirBreakInstance);
-        createFHIRPitServices(fhirBreakInstance);
-    }
 
-    public void createFHIRPitServices(DeploymentMapNodeElement fhirpitNode) {
+    @Override
+    public void buildExternalisedServiceNode(DeploymentMapNodeElement fhirpitNode) {
         DeploymentMapNodeElement fhirpitGen0ServiceNode = new DeploymentMapNodeElement();
         fhirpitGen0ServiceNode.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
         fhirpitGen0ServiceNode.setElementVersion("0.0.1");
@@ -73,4 +65,10 @@ public class BuildFHIRPitMap {
         fhirpitGen1ServiceNode.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
         fhirpitNode.getContainedElements().add(fhirpitGen1ServiceNode);
     }
+
+    @Override
+    public Set<DeploymentMapNodeElement> buildConnectedSystemSet() {
+        return(new HashSet<DeploymentMapNodeElement>());
+    }
+
 }

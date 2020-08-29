@@ -35,7 +35,7 @@ import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeE
  */
 public abstract class ExternalisedService {
 
-    abstract public DeploymentMapNodeElement buildExternalisedServiceNode(DeploymentMapNodeElement subsystem);
+    abstract public void buildExternalisedServiceNode(DeploymentMapNodeElement subsystem);
     abstract public Set<DeploymentMapNodeElement> buildConnectedSystemSet();
    
 }
