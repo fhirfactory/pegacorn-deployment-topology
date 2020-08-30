@@ -22,15 +22,20 @@
  * THE SOFTWARE.
  */
 
-package net.fhirfactory.pegacorn.deployment.topology.map.buildertypes;
+package net.fhirfactory.pegacorn.deployment.topology.map.achetypes.common;
 
-import net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.common.ExternalisedService;
+import java.util.Set;
+
+import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeElement;
 
 /**
  * 
  * @author Mark A Hunter
  *
  */
-public abstract class FHIRBreakExternalisedService extends ExternalisedService {
+public abstract class ExternalisedService {
 
+    abstract public void buildExternalisedServiceNode(DeploymentMapNodeElement subsystem);
+    abstract public Set<DeploymentMapNodeElement> buildConnectedSystemSet();
+   
 }

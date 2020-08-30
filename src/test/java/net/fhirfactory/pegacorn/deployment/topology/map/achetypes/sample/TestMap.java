@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.sample;
+package net.fhirfactory.pegacorn.deployment.topology.map.achetypes.sample;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import net.fhirfactory.pegacorn.common.model.FDN;
 import net.fhirfactory.pegacorn.common.model.RDN;
-import net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.PegacornSolution;
+import net.fhirfactory.pegacorn.deployment.topology.map.achetypes.PegacornSolution;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.NodeElementTypeEnum;
@@ -18,18 +19,16 @@ import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeE
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.enterprise.context.ApplicationScoped;
+
 /**
  *
  * @author mhunter
  */
+
+@ApplicationScoped
 public class TestMap extends PegacornSolution {
     private static final Logger LOG = LoggerFactory.getLogger(TestMap.class);
-
-    DeploymentMapNodeElement solutionNode;
-    
-    public TestMap(){
-        solutionNode = new DeploymentMapNodeElement();
-    }
 
     @Override
     protected String specifySolutionName() {
@@ -38,7 +37,7 @@ public class TestMap extends PegacornSolution {
 
     @Override
     protected String specifySolutionVersion() {
-        return ("0.0.1-Alpha");
+        return ("0.0.1");
     }
 
     @Override
@@ -97,7 +96,7 @@ public class TestMap extends PegacornSolution {
 
     @Override
     protected Set<DeploymentMapNodeElement> specifyConnectedSystems() {
-        return null;
+        return(new HashSet<DeploymentMapNodeElement>());
     }
 
     public DeploymentMapNodeElement getSolutionNode() {

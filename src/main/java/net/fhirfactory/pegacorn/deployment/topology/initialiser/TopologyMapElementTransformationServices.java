@@ -22,8 +22,12 @@
 package net.fhirfactory.pegacorn.deployment.topology.initialiser;
 
 import java.util.Iterator;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
 import javax.inject.Inject;
+import javax.inject.Named;
+
 import net.fhirfactory.pegacorn.common.model.FDN;
 import net.fhirfactory.pegacorn.common.model.FDNToken;
 import net.fhirfactory.pegacorn.common.model.RDN;
@@ -41,15 +45,16 @@ import org.slf4j.LoggerFactory;
  *
  * @author Mark A. Hunter
  */
+
 @ApplicationScoped
 public class TopologyMapElementTransformationServices {
 
     private static final Logger LOG = LoggerFactory.getLogger(TopologyMapElementTransformationServices.class);
 
     @Inject
-    TopologyIM topologyInformationManager;
+    private TopologyIM topologyInformationManager;
 
-    public NodeElement registerAsNodeElement(DeploymentMapNodeElement incomingNodeDetail, NodeElementIdentifier parentNodeInstanceID, FDNToken parentNodeFunctionID) {
+    public NodeElement registerDeploymentNodeAsTopologyNodeElement(DeploymentMapNodeElement incomingNodeDetail, NodeElementIdentifier parentNodeInstanceID, FDNToken parentNodeFunctionID) {
         LOG.debug(".convertToNodeElement(): Entry, incomingNodeDetail --> {}, parentNodeInstanceID --> {}, parentNodeFunctionID --> {}", incomingNodeDetail, parentNodeInstanceID, parentNodeFunctionID);
 
         NodeElement newNode = new NodeElement();
@@ -104,9 +109,9 @@ public class TopologyMapElementTransformationServices {
                 NodeElementIdentifier containedNodeIdentifier = new NodeElementIdentifier(containedNodeFDN.getToken());
                 newNode.addContainedElement(containedNodeIdentifier);
                 if (newNode.getNodeFunctionID() == null) {
-                    registerAsNodeElement(containedNode, containedNodeIdentifier, parentNodeFunctionID);
+                    registerDeploymentNodeAsTopologyNodeElement(containedNode, containedNodeIdentifier, parentNodeFunctionID);
                 } else {
-                    registerAsNodeElement(containedNode, containedNodeIdentifier, newNodeFunctionID.getToken());
+                    registerDeploymentNodeAsTopologyNodeElement(containedNode, containedNodeIdentifier, newNodeFunctionID.getToken());
                 }
             }
         }
@@ -117,7 +122,7 @@ public class TopologyMapElementTransformationServices {
             while (endPointIterator.hasNext()) {
                 DeploymentMapEndpointElement currentElement = endPointIterator.next();
                 LOG.trace(".convertToNodeElement(): Adding the contained Endpoint --> {}", currentElement.getEndpointInstanceID());
-                EndpointElement endpoint = registerAsEndpointElement(currentElement, nodeIdentifier, newNodeFunctionID.getToken());
+                EndpointElement endpoint = registerDeploymentEndpointAsTopologyEndpointElement(currentElement, nodeIdentifier, newNodeFunctionID.getToken());
                 LOG.trace(".convertToNodeElement(): Converted ConfigMapEndpointElement to EndpointElement --> {}", endpoint);
                 newNode.addEndpoint(endpoint.getEndpointInstanceID());
                 LOG.trace(".convertToNodeElement(): Calling on Topology Manager to register Endpoint, endpoint --> {}", endpoint);
@@ -129,7 +134,7 @@ public class TopologyMapElementTransformationServices {
 
     }
 
-    public EndpointElement registerAsEndpointElement(DeploymentMapEndpointElement incomingEndpointDetail, NodeElementIdentifier containingNodeInstanceID, FDNToken containingNodeFunctionID) {
+    public EndpointElement registerDeploymentEndpointAsTopologyEndpointElement(DeploymentMapEndpointElement incomingEndpointDetail, NodeElementIdentifier containingNodeInstanceID, FDNToken containingNodeFunctionID) {
         LOG.debug(".convertToEndpointElement(): Entry, incomingEndpointDetail --> {}, containingNodeInstanceID --> {}, containingNodeFunctionID --> {}", incomingEndpointDetail, containingNodeInstanceID, containingNodeFunctionID);
         EndpointElement newElement = new EndpointElement();
         LOG.trace(".convertToEndpointElement(): Adding Containing Node (Function) --> {}", containingNodeFunctionID);

@@ -116,50 +116,56 @@
                 <suffix value=".yyyy-MM-dd"/>
                 <append value="true"/>
             </periodic-rotating-file-handler>
-            <logger category="net.fhirfactory.pegacorn">
+            <logger category="net.fhirfactory.pegacorn.deployment">
+                <level name="TRACE"/>
+            </logger>
+            <logger category="net.fhirfactory.pegacorn.petasos.model.topology">
+                <level name="TRACE"/>
+            </logger>
+            <logger category="net.fhirfactory.pegacorn.petasos.topology.manager">
                 <level name="TRACE"/>
             </logger>
             <logger category="com.arjuna">
-                <level name="WARN"/>
+                <level name="INFO"/>
             </logger>
             <logger category="io.jaegertracing">
-                <level name="WARN"/>
+                <level name="INFO"/>
             </logger>
             <logger category="org.jboss">
-                <level name="WARN"/>
+                <level name="INFO"/>
             </logger>
             <logger category="org.xnio">
-                <level name="WARN"/>
+                <level name="INFO"/>
             </logger>
             <logger category="org.infinispan">
-                <level name="WARN"/>
+                <level name="INFO"/>
             </logger>
             <logger category="sun.rmi">
-                <level name="WARN"/>
+                <level name="INFO"/>
             </logger>
             <logger category="io.smallrye">
-                <level name="WARN"/>
+                <level name="INFO"/>
             </logger>
             <logger category="org.jgroups">
-                <level name="WARN"/>
+                <level name="INFO"/>
             </logger>
             <logger category="org.hibernate">
-                <level name="WARN"/>
+                <level name="INFO"/>
             </logger>
             <logger category="org.wildfly">
-                <level name="WARN"/>
+                <level name="INFO"/>
             </logger>
             <logger category="org.apache">
-                <level name="WARN"/>
+                <level name="INFO"/>
             </logger>
             <logger category="io.undertow">
-                <level name="WARN"/>
+                <level name="INFO"/>
             </logger>
             <logger category="io.netty">
-                <level name="WARN"/>
+                <level name="INFO"/>
             </logger>
             <root-logger>
-                <level name="TRACE"/>
+                <level name="INFO"/>
                 <handlers>
                     <handler name="CONSOLE"/>
                     <handler name="FILE"/>

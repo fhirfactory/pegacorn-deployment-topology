@@ -1,7 +1,9 @@
-package net.fhirfactory.pegacorn.deployment.topology.map.buildertypes;
+package net.fhirfactory.pegacorn.deployment.topology.map.achetypes;
 
 import net.fhirfactory.pegacorn.deployment.topology.manager.DeploymentTopologyIM;
-import net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.sample.TestMap;
+import net.fhirfactory.pegacorn.deployment.topology.map.achetypes.sample.TestMap;
+import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
+import net.fhirfactory.pegacorn.petasos.model.topology.NodeElementIdentifier;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePath;
@@ -30,10 +32,11 @@ import static org.junit.Assert.assertTrue;
 public class PegacornSolutionTest {
     private static final Logger LOG = LoggerFactory.getLogger(PegacornSolutionTest.class);
 
-    private TestMap testMapInstance;
-
     @Inject
     DeploymentTopologyIM deployedTopologyIM;
+
+    @Inject
+    TestMap myMap;
 
     @Deployment
     public static WebArchive createDeployment() {
@@ -52,7 +55,7 @@ public class PegacornSolutionTest {
         testWAR = ShrinkWrap.create(WebArchive.class, "pegacorn-deployment-topology.war")
                 .addAsLibraries(fileSet)
                 .addPackages(true, "net.fhirfactory.pegacorn.deployment.topology")
-                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
+                .addAsManifestResource("META-INF/beans.xml", "WEB-INF/beans.xml");
         if(LOG.isTraceEnabled()) {
             Map<ArchivePath, Node> content = testWAR.getContent();
             Set<ArchivePath> contentPathSet = content.keySet();
@@ -67,55 +70,41 @@ public class PegacornSolutionTest {
 
     @Before
     public void initialise(){
-        LOG.info(".initialise(): Entry");
-        testMapInstance = new TestMap();
-        LOG.info(".initialise(): Exit");
+        LOG.trace(".initialise(): Entry");
+        myMap.getSolutionName();
+        LOG.trace(".initialise(): Exit");
     }
 
     @Test
     public void specifySolutionName() {
-        LOG.info(".specifySolutionName(): --> ", this.testMapInstance.getSolutionName());
-        assertTrue(true);
+        LOG.debug(".specifySolutionName(): Expected --> PegacornTestSystem, actual --> {}", myMap.getSolutionName());
+        assertTrue(myMap.getSolutionName().equals("PegacornTestSystem"));
     }
 
     @Test
     public void specifySolutionVersion() {
+        LOG.debug(".specifySolutionVersion(): Expected --> 0.0.1, actual --> {}", myMap.getSolutionVersion());
+        assertTrue(myMap.getSolutionVersion().equals("0.0.1"));
     }
 
     @Test
     public void specifyResilienceMode() {
+        LOG.debug(".specifyResilienceMode(): Expected --> {}, actual --> {}", ResilienceModeEnum.RESILIENCE_MODE_STANDALONE ,myMap.getSolutionMode());
+        assertTrue(myMap.getSolutionMode()==ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
     }
 
     @Test
     public void specifyCommunicateExternalisedServices() {
+        LOG.debug(".specifyCommunicateExternalisedServices(): Entry");
+        NodeElementIdentifier retrieved_node = deployedTopologyIM.getProcessingPlantInstanceID("Matrix2FHIRServices", "0.0.1");
+        LOG.debug(".specifyCommunicateExternalisedServices(): retrieved_node (NodeElementIdentifier) --> {}", retrieved_node);
     }
 
     @Test
     public void specifyMITaFExternalisedServices() {
-    }
-
-    @Test
-    public void specifyFHIRPlaceExternalisedServices() {
-    }
-
-    @Test
-    public void specifyFHIRPitExternalisedServices() {
-    }
-
-    @Test
-    public void specifyFHIRViewExternalisedServices() {
-    }
-
-    @Test
-    public void specifyLadonExternalisedServices() {
-    }
-
-    @Test
-    public void specifyHestiaExternalisedServices() {
-    }
-
-    @Test
-    public void specifyFHIRBreakExternalisedServices() {
+        LOG.debug(".specifyCommunicateExternalisedServices(): Entry");
+        NodeElementIdentifier retrieved_node = deployedTopologyIM.getProcessingPlantInstanceID("Matrix2FHIRServices", "0.0.1");
+        LOG.debug(".specifyCommunicateExternalisedServices(): retrieved_node (NodeElementIdentifier) --> {}", retrieved_node);
     }
 
     @Test

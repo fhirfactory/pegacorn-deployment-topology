@@ -21,13 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.sample;
+package net.fhirfactory.pegacorn.deployment.topology.map.achetypes.sample;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.CommunicateExternalisedService;
+import net.fhirfactory.pegacorn.deployment.topology.map.achetypes.CommunicateExternalisedService;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.EndpointElementTypeEnum;
@@ -61,7 +60,6 @@ public class BuildCommunicateMap extends CommunicateExternalisedService {
         echoServer.setFunctionName(nodeEcho);
         echoServer.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
         echoServer.setTopologyElementType(NodeElementTypeEnum.EXTERNALISED_SERVICE);
-        echoServer.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
         LOG.trace(".buildExternalisedServiceNode(): Adding echoServer (DeploymentMapNodeElement) --> {}", echoServer);
         communicateNode.getContainedElements().add(echoServer);
 
@@ -72,7 +70,7 @@ public class BuildCommunicateMap extends CommunicateExternalisedService {
         avBridgeServer.setFunctionName(nodeAVBridge);
         avBridgeServer.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
         avBridgeServer.setTopologyElementType(NodeElementTypeEnum.EXTERNALISED_SERVICE);
-        avBridgeServer.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
+        LOG.trace(".buildExternalisedServiceNode(): Adding nodeAVBridge (DeploymentMapNodeElement) --> {}", nodeAVBridge);
         communicateNode.getContainedElements().add(avBridgeServer);
 
         DeploymentMapNodeElement avConfServerInstance = new DeploymentMapNodeElement();
@@ -82,7 +80,7 @@ public class BuildCommunicateMap extends CommunicateExternalisedService {
         avConfServerInstance.setFunctionName(nodeAVConferenceServer);
         avConfServerInstance.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
         avConfServerInstance.setTopologyElementType(NodeElementTypeEnum.EXTERNALISED_SERVICE);
-        avConfServerInstance.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
+        LOG.trace(".buildExternalisedServiceNode(): Adding nodeAVConferenceServer (DeploymentMapNodeElement) --> {}", nodeAVConferenceServer);
         communicateNode.getContainedElements().add(avConfServerInstance);
 
         DeploymentMapNodeElement grpServerInstane = new DeploymentMapNodeElement();
@@ -92,7 +90,7 @@ public class BuildCommunicateMap extends CommunicateExternalisedService {
         grpServerInstane.setFunctionName(nodeGrpServer);
         grpServerInstane.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
         grpServerInstane.setTopologyElementType(NodeElementTypeEnum.EXTERNALISED_SERVICE);
-        grpServerInstane.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
+        LOG.trace(".buildExternalisedServiceNode(): Adding nodeGrpServer (DeploymentMapNodeElement) --> {}", nodeGrpServer);
         communicateNode.getContainedElements().add(grpServerInstane);
 
         DeploymentMapNodeElement irisInstance = new DeploymentMapNodeElement();
@@ -102,7 +100,7 @@ public class BuildCommunicateMap extends CommunicateExternalisedService {
         irisInstance.setFunctionName(nodeIris);
         irisInstance.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
         irisInstance.setTopologyElementType(NodeElementTypeEnum.EXTERNALISED_SERVICE);
-        irisInstance.setContainedElements(new ArrayList<DeploymentMapNodeElement>());
+        LOG.trace(".buildExternalisedServiceNode(): Adding nodeIris (DeploymentMapNodeElement) --> {}", nodeIris);
         communicateNode.getContainedElements().add(irisInstance);
         createIrisSites(irisInstance);
     }
@@ -195,7 +193,7 @@ public class BuildCommunicateMap extends CommunicateExternalisedService {
         nodePlatformA.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
         nodePlatformA.setTopologyElementType(NodeElementTypeEnum.PLATFORM);
         irisSiteNode.getContainedElements().add(nodePlatformA);
-        createIrisServiceModules(nodePlatformA);
+        createIrisProcessingPlant(nodePlatformA);
 
         /*        ConfigMapNodeElement nodePlatformB = new ConfigMapNodeElement();
         nodePlatformB.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
@@ -207,14 +205,14 @@ public class BuildCommunicateMap extends CommunicateExternalisedService {
         createIrisServices(nodePlatformB); */
     }
 
-    public void createIrisServiceModules(DeploymentMapNodeElement nodeNode) {
+    public void createIrisProcessingPlant(DeploymentMapNodeElement nodeNode) {
         DeploymentMapNodeElement nodeMatrixNotificationsReceiver = new DeploymentMapNodeElement();
         nodeMatrixNotificationsReceiver.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
         nodeMatrixNotificationsReceiver.setElementVersion("0.0.1");
         nodeMatrixNotificationsReceiver.setInstanceName("Matrix2FHIRServices");
         nodeMatrixNotificationsReceiver.setFunctionName("Matrix2FHIRServices");
         nodeMatrixNotificationsReceiver.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
-        nodeMatrixNotificationsReceiver.setTopologyElementType(NodeElementTypeEnum.SERVICE_MODULE);
+        nodeMatrixNotificationsReceiver.setTopologyElementType(NodeElementTypeEnum.PROCESSING_PLANT);
         nodeNode.getContainedElements().add(nodeMatrixNotificationsReceiver);
         createM2FInteractProcessingPlatform(nodeMatrixNotificationsReceiver);
         createM2FTransformProcessingPlatform(nodeMatrixNotificationsReceiver);
@@ -229,7 +227,7 @@ public class BuildCommunicateMap extends CommunicateExternalisedService {
         nodeInteractMatrixNotificationsReceiver.setInstanceName("Interact");
         nodeInteractMatrixNotificationsReceiver.setFunctionName("Interact");
         nodeInteractMatrixNotificationsReceiver.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
-        nodeInteractMatrixNotificationsReceiver.setTopologyElementType(NodeElementTypeEnum.PROCESSING_PLANT);
+        nodeInteractMatrixNotificationsReceiver.setTopologyElementType(NodeElementTypeEnum.WORKSHOP);
         serviceModuleNode.getContainedElements().add(nodeInteractMatrixNotificationsReceiver);
         createMatrix2FHIRServicesWUPs(nodeInteractMatrixNotificationsReceiver);
     }
@@ -273,7 +271,7 @@ public class BuildCommunicateMap extends CommunicateExternalisedService {
         nodeTransformProcessingPlant.setInstanceName("Transform");
         nodeTransformProcessingPlant.setFunctionName("Transform");
         nodeTransformProcessingPlant.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
-        nodeTransformProcessingPlant.setTopologyElementType(NodeElementTypeEnum.PROCESSING_PLANT);
+        nodeTransformProcessingPlant.setTopologyElementType(NodeElementTypeEnum.WORKSHOP);
         serviceModuleNode.getContainedElements().add(nodeTransformProcessingPlant);
 
         DeploymentMapNodeElement nodeMatrixTransformer1 = new DeploymentMapNodeElement();
@@ -311,7 +309,7 @@ public class BuildCommunicateMap extends CommunicateExternalisedService {
         nodeM2FEdge.setInstanceName("Edge");
         nodeM2FEdge.setFunctionName("Edge");
         nodeM2FEdge.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
-        nodeM2FEdge.setTopologyElementType(NodeElementTypeEnum.PROCESSING_PLANT);
+        nodeM2FEdge.setTopologyElementType(NodeElementTypeEnum.WORKSHOP);
         serviceModuleNode.getContainedElements().add(nodeM2FEdge);
         createM2FEdgeForwardWUP(nodeM2FEdge);
 

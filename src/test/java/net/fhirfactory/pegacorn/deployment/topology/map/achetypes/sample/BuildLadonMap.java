@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.sample;
+package net.fhirfactory.pegacorn.deployment.topology.map.achetypes.sample;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.LadonExternalisedServices;
+import net.fhirfactory.pegacorn.deployment.topology.map.achetypes.LadonExternalisedServices;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.EndpointElementTypeEnum;
@@ -163,7 +163,7 @@ public class BuildLadonMap extends LadonExternalisedServices {
         nodeEdgeForward.setInstanceName("EdgeForward");
         nodeEdgeForward.setFunctionName("EdgeForward");
         nodeEdgeForward.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
-        nodeEdgeForward.setTopologyElementType(NodeElementTypeEnum.SERVICE_MODULE);
+        nodeEdgeForward.setTopologyElementType(NodeElementTypeEnum.PROCESSING_PLANT);
         nodeNode.getContainedElements().add(nodeEdgeForward);
 
         DeploymentMapNodeElement nodeEdgeReceive = new DeploymentMapNodeElement();
@@ -172,7 +172,7 @@ public class BuildLadonMap extends LadonExternalisedServices {
         nodeEdgeReceive.setInstanceName("EdgeReceive");
         nodeEdgeReceive.setFunctionName("EdgeReceive");
         nodeEdgeReceive.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
-        nodeEdgeReceive.setTopologyElementType(NodeElementTypeEnum.SERVICE_MODULE);
+        nodeEdgeReceive.setTopologyElementType(NodeElementTypeEnum.PROCESSING_PLANT);
         nodeNode.getContainedElements().add(nodeEdgeReceive);
 
         DeploymentMapEndpointElement endpointEndReceiveCommunication = new DeploymentMapEndpointElement();

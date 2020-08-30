@@ -22,16 +22,16 @@
  * THE SOFTWARE.
  */
 
-package net.fhirfactory.pegacorn.deployment.topology.map.buildertypes;
+package net.fhirfactory.pegacorn.deployment.topology.map.achetypes;
 
-import net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.common.ExternalisedService;
+import net.fhirfactory.pegacorn.deployment.topology.map.achetypes.common.ExternalisedService;
 
 /**
  * 
  * @author Mark A Hunter
  *
  */
-public abstract class LadonExternalisedServices extends ExternalisedService {
+public abstract class MITaFExternalisedService extends ExternalisedService {
 
-
+    
 }

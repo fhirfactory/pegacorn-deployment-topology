@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package net.fhirfactory.pegacorn.deployment.topology.map.buildertypes;
+package net.fhirfactory.pegacorn.deployment.topology.map.achetypes;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,6 +36,7 @@ import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeE
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.NodeElementTypeEnum;
+import net.fhirfactory.pegacorn.petasos.topology.manager.TopologyIM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,17 +45,22 @@ import org.slf4j.LoggerFactory;
  * @author Mark A Hunter
  *
  */
+
 public abstract class PegacornSolution {
 	private static final Logger LOG = LoggerFactory.getLogger(PegacornSolution.class);
 
-    protected DeploymentMapNodeElement solution;
+    protected DeploymentMapNodeElement solutionNode;
     private String solutionName;
     private String solutionVersion;
     private ResilienceModeEnum solutionMode;
     protected Set<DeploymentMapNodeElement> connectedSubsystems;
-    
-    @Inject
-	TopologyMapElementTransformationServices topologyMapService;
+    private boolean isInitialised;
+
+	@Inject
+	private TopologyMapElementTransformationServices 	topologyMapService;
+
+	@Inject
+	private TopologyIM topologyServer;
     
     public PegacornSolution(){
     	LOG.debug(".PegacornSolution(): Entry, Constructor called!");
@@ -62,29 +68,43 @@ public abstract class PegacornSolution {
         this.solutionVersion = specifySolutionVersion();
         this.solutionMode = specifyResilienceMode();
         this.connectedSubsystems = new HashSet<DeploymentMapNodeElement>();
+        isInitialised = false;
 		LOG.debug(".PegacornSolution(): Exit, this.solutionName --> {}", this.solutionName);
     }
     
     @PostConstruct
     public void initialise(){
 		LOG.debug(".initialise(): Entry");
-        this.solution = buildSolution();
-        
-        buildFHIRBreak();
-        buildFHIRPit();
-        buildFHIRView();
-        buildFHIRPlace();
-        buildLadon();
-        buildHestia();
-        buildMITaF();
-        buildCommunicate();
-        
-        this.connectedSubsystems.addAll(specifyConnectedSystems());
-        
-        topologyMapService.registerAsNodeElement(this.getSolution(), null, null);
-        for(DeploymentMapNodeElement node: connectedSubsystems) {
-        	topologyMapService.registerAsNodeElement(node, null, null);
-        }
+		if(!isInitialised) {
+			LOG.trace(".initialise(): Doing initialisation!");
+			this.solutionNode = buildSolution();
+			LOG.trace(".initialise(): Solution built, adding FHIRBreak Nodes");
+			buildFHIRBreak();
+			LOG.trace(".initialise(): FHIRBreak Nodes added, adding FHIRPit Nodes");
+			buildFHIRPit();
+			LOG.trace(".initialise(): FHIRPit Nodes added, adding FHIRView Nodes");
+			buildFHIRView();
+			LOG.trace(".initialise(): FHIRView Nodes added, adding FHIRPlace Nodes");
+			buildFHIRPlace();
+			LOG.trace(".initialise(): FHIRPlace Nodes added, Adding Ladon Nodes");
+			buildLadon();
+			LOG.trace(".initialise(): Ladon Nodes added, Adding Hestia Nodes");
+			buildHestia();
+			LOG.trace(".initialise(): Hestia Nodes added, Adding MITaF Nodes");
+			buildMITaF();
+			LOG.trace(".initialise(): MITaF Nodes added, Adding Communicate Nodes");
+			buildCommunicate();
+			LOG.trace(".initialise(): Communicate Nodes added, Adding Connected System Nodes");
+			this.connectedSubsystems.addAll(specifyConnectedSystems());
+			LOG.trace(".initialise(): Connected System Nodes added, Installing Pegacorn Solution into Topology Server");
+			topologyMapService.registerDeploymentNodeAsTopologyNodeElement(this.getSolution(), null, null);
+			LOG.trace(".initialise(): Installed Pegacorn Solution into Topology Server, Adding Connected Systems to Topology Server");
+			for (DeploymentMapNodeElement node : connectedSubsystems) {
+				topologyMapService.registerDeploymentNodeAsTopologyNodeElement(node, null, null);
+			}
+			LOG.trace(".initialise(): Installed Connected Systems to Topology Server, done...");
+			this.isInitialised = true;
+		}
 		LOG.debug(".initialise(): Exit");
     }
 
@@ -103,11 +123,11 @@ public abstract class PegacornSolution {
     abstract protected Set<DeploymentMapNodeElement> specifyConnectedSystems();
     
     public DeploymentMapNodeElement getSolution() {
-		return solution;
+		return solutionNode;
 	}
 
 	public void setSolution(DeploymentMapNodeElement solution) {
-		this.solution = solution;
+		this.solutionNode = solution;
 	}
 
 	public String getSolutionName() {

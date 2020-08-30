@@ -21,14 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.sample;
+package net.fhirfactory.pegacorn.deployment.topology.map.achetypes.sample;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.CommunicateExternalisedService;
-import net.fhirfactory.pegacorn.deployment.topology.map.buildertypes.FHIRBreakExternalisedService;
+import net.fhirfactory.pegacorn.deployment.topology.map.achetypes.FHIRBreakExternalisedService;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.EndpointElementTypeEnum;
@@ -206,7 +205,7 @@ public class BuildFHIRBreakMap extends FHIRBreakExternalisedService {
         nodeTechOneAPIServer.setInstanceName("TechologyOneAPIServer");
         nodeTechOneAPIServer.setFunctionName("TechologyOneAPIServer");
         nodeTechOneAPIServer.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
-        nodeTechOneAPIServer.setTopologyElementType(NodeElementTypeEnum.SERVICE_MODULE);
+        nodeTechOneAPIServer.setTopologyElementType(NodeElementTypeEnum.PROCESSING_PLANT);
         nodeNode.getContainedElements().add(nodeTechOneAPIServer);
 
         DeploymentMapEndpointElement endpointTechOneAPIReceiver = new DeploymentMapEndpointElement();
@@ -234,7 +233,7 @@ public class BuildFHIRBreakMap extends FHIRBreakExternalisedService {
         nodeEdgeForward.setInstanceName("EdgeForward");
         nodeEdgeForward.setFunctionName("EdgeForward");
         nodeEdgeForward.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
-        nodeEdgeForward.setTopologyElementType(NodeElementTypeEnum.SERVICE_MODULE);
+        nodeEdgeForward.setTopologyElementType(NodeElementTypeEnum.PROCESSING_PLANT);
         nodeNode.getContainedElements().add(nodeEdgeForward);
 
         DeploymentMapNodeElement nodeEdgeReceive = new DeploymentMapNodeElement();
@@ -243,7 +242,7 @@ public class BuildFHIRBreakMap extends FHIRBreakExternalisedService {
         nodeEdgeReceive.setInstanceName("EdgeReceive");
         nodeEdgeReceive.setFunctionName("EdgeReceive");
         nodeEdgeReceive.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
-        nodeEdgeReceive.setTopologyElementType(NodeElementTypeEnum.SERVICE_MODULE);
+        nodeEdgeReceive.setTopologyElementType(NodeElementTypeEnum.PROCESSING_PLANT);
         nodeNode.getContainedElements().add(nodeEdgeReceive);
 
         DeploymentMapEndpointElement endpointEndReceiveCommunication = new DeploymentMapEndpointElement();
