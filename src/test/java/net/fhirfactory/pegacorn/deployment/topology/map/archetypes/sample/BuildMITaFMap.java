@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.achetypes.sample;
+package net.fhirfactory.pegacorn.deployment.topology.map.archetypes.sample;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.fhirfactory.pegacorn.deployment.topology.map.achetypes.MITaFExternalisedService;
+import net.fhirfactory.pegacorn.deployment.topology.map.archetypes.MITaFPegacornSubsystem;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.NodeElementTypeEnum;
@@ -37,13 +37,25 @@ import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeE
  *
  * @author Mark A. Hunter
  */
-public class BuildMITaFMap extends MITaFExternalisedService {
+public class BuildMITaFMap extends MITaFPegacornSubsystem {
 
     String nodeMITaFText = "MITaF";
     String nodeMITaFGen0Text = "gen0-mitaf";
     String nodeMITaFGen1Text = "gen1-mitaf";
 
     @Override
+    public void buildSubsystemNode(DeploymentMapNodeElement solutionNode) {
+        DeploymentMapNodeElement mitafNode = new DeploymentMapNodeElement();
+        mitafNode.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
+        mitafNode.setElementVersion("0.0.1");
+        mitafNode.setInstanceName("MITaF");
+        mitafNode.setFunctionName("MITaF");
+        mitafNode.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
+        mitafNode.setTopologyElementType(NodeElementTypeEnum.EXTERNALISED_SERVICE);
+        mitafNode.getContainedElements().add(mitafNode);
+        buildExternalisedServiceNode(mitafNode);
+    }
+
     public void buildExternalisedServiceNode(DeploymentMapNodeElement mitafNode) {
         DeploymentMapNodeElement mitafGen0ServiceNode = new DeploymentMapNodeElement();
         mitafGen0ServiceNode.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);

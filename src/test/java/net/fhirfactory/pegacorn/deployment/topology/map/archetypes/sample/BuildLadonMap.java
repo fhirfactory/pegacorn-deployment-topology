@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.achetypes.sample;
+package net.fhirfactory.pegacorn.deployment.topology.map.archetypes.sample;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.fhirfactory.pegacorn.deployment.topology.map.achetypes.LadonExternalisedServices;
+import net.fhirfactory.pegacorn.deployment.topology.map.archetypes.LadonExternalisedServices;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.EndpointElementTypeEnum;
@@ -45,6 +45,18 @@ public class BuildLadonMap extends LadonExternalisedServices {
     String nodeLadonGen0Text = "gen0-ladon";
 
     @Override
+    public void buildSubsystemNode(DeploymentMapNodeElement solutionNode) {
+        DeploymentMapNodeElement ladonNode = new DeploymentMapNodeElement();
+        ladonNode.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
+        ladonNode.setElementVersion("0.0.1");
+        ladonNode.setInstanceName("Ladon");
+        ladonNode.setFunctionName("Ladon");
+        ladonNode.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
+        ladonNode.setTopologyElementType(NodeElementTypeEnum.EXTERNALISED_SERVICE);
+        ladonNode.getContainedElements().add(ladonNode);
+        buildExternalisedServiceNode(ladonNode);
+    }
+
     public void buildExternalisedServiceNode(DeploymentMapNodeElement ladonNode) {
         DeploymentMapNodeElement gen0LadonServiceNode = new DeploymentMapNodeElement();
         gen0LadonServiceNode.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);

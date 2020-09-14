@@ -1,13 +1,11 @@
 package net.fhirfactory.pegacorn.deployment.topology.manager;
 
-import net.fhirfactory.pegacorn.deployment.topology.map.achetypes.PegacornSolutionTest;
+import net.fhirfactory.pegacorn.deployment.topology.map.archetypes.PegacornSolutionTest;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePath;
 import org.jboss.shrinkwrap.api.Node;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenFormatStage;
@@ -22,8 +20,6 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 @RunWith(Arquillian.class)
 public class DeploymentTopologyIMTest {

@@ -108,7 +108,7 @@ public class DeploymentTopologyIM {
         for (int counter = 0; counter < nodeSetSize; counter++) {
             NodeElementIdentifier currentInstanceID = nodeSet.get(counter);
             FDN currentInstanceFDN = new FDN(currentInstanceID);
-            String currentInstanceFDNQualifier = currentInstanceFDN.getUnqualifiedRDN().getNameQualifier();
+            String currentInstanceFDNQualifier = currentInstanceFDN.getUnqualifiedRDN().getQualifier();
             LOG.trace(".getProcessingPlantInstanceID(): Entry[{}], Instance Qualifier --> {}", counter, currentInstanceFDNQualifier);
             boolean isOfTypeProcessingPlant = currentInstanceFDNQualifier.contentEquals(NodeElementTypeEnum.PROCESSING_PLANT.getNodeElementType());
             if (isOfTypeProcessingPlant) {
@@ -157,8 +157,8 @@ public class DeploymentTopologyIM {
         for (int counter = 0; counter < nodeSetSize; counter++) {
             NodeElementIdentifier currentInstanceID = nodeSet.get(counter);
             FDN currentInstanceFDN = new FDN(currentInstanceID);
-            LOG.trace(".getWUPInstanceID(): Current candidate --> {}", currentInstanceFDN.getUnqualifiedRDN().getNameValue());
-            String currentInstanceFDNQualifier = currentInstanceFDN.getUnqualifiedRDN().getNameQualifier();
+            LOG.trace(".getWUPInstanceID(): Current candidate --> {}", currentInstanceFDN.getUnqualifiedRDN().getValue());
+            String currentInstanceFDNQualifier = currentInstanceFDN.getUnqualifiedRDN().getQualifier();
             boolean isOfTypeWUP = currentInstanceFDNQualifier.contentEquals(NodeElementTypeEnum.WUP.getNodeElementType());
             if (isOfTypeWUP) {
                 NodeElementIdentifier nodeID = new NodeElementIdentifier(currentInstanceID);
@@ -207,17 +207,11 @@ public class DeploymentTopologyIM {
      * @return An unambiguous descriptor of the functional processing capability of the WUP (NodeElementFunctionToken).
      */
     public NodeElementFunctionToken getWUPFunctionToken(WUPIdentifier wupID) {
-        LOG.debug(".getWUPFunctionID(): Entry, wupID --> {}", wupID);
+        LOG.debug(".getWUPFunctionToken(): Entry, wupID --> {}", wupID);
         NodeElementIdentifier nodeID = new NodeElementIdentifier(wupID);
         NodeElement node = topologyManager.getNode(nodeID);
-        NodeElementFunctionToken functionToken = new NodeElementFunctionToken();
-        FDNToken functionID = node.getNodeFunctionID();
-        LOG.trace(".getWUPFunctionToken(): functionID --> {}", functionID);
-        String version = node.getVersion();
-        LOG.trace(".getWUPFunctionToken(): version --> {}", version);
-        functionToken.setVersion(version);
-        functionToken.setFunctionID(functionID);
-        LOG.debug(".getWUPFunctionID(): Exit, functionToken --> {}", functionToken);
+        NodeElementFunctionToken functionToken = node.getNodeFunctionToken();
+        LOG.debug(".getWUPFunctionToken(): Exit, functionToken --> {}", functionToken);
         return (functionToken);
     }
 
@@ -391,4 +385,11 @@ public class DeploymentTopologyIM {
         retrievedNode.setInstanceInPlace(instantionState);
         LOG.debug(".setInstanceInPlace(): Exit");
     }
+    public EndpointElement getEndpoint(NodeElement node, String endpointName, String endpointVersion){
+        LOG.debug(".getEndpoint(): Entry: node --> {}, endpointName --> {}, endpointVersion --> {}", node, endpointName,endpointVersion);
+        EndpointElement extractedEndpoint = topologyManager.getEndpoint(node, endpointName, endpointVersion);
+        LOG.debug(".getEndpoint(): Exit");
+        return(extractedEndpoint);
+    }
+
 }

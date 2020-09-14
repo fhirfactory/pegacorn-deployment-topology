@@ -22,11 +22,8 @@
 package net.fhirfactory.pegacorn.deployment.topology.initialiser;
 
 import java.util.Iterator;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Default;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import net.fhirfactory.pegacorn.common.model.FDN;
 import net.fhirfactory.pegacorn.common.model.FDNToken;
@@ -75,6 +72,7 @@ public class TopologyMapElementTransformationServices {
         }
         newNodeInstanceID.appendRDN(new RDN(incomingNodeDetail.getTopologyElementType().getNodeElementType(), incomingNodeDetail.getInstanceName()));
         NodeElementIdentifier nodeIdentifier = new NodeElementIdentifier(newNodeInstanceID.getToken());
+        LOG.trace(".convertToNodeElement(): New Node Identifier for NodeElement --> {}", nodeIdentifier);
         newNode.setNodeInstanceID(nodeIdentifier);
         LOG.trace(".convertToNodeElement(): Adding the FunctionID to the new NodeElement, function name --> {}", incomingNodeDetail.getFunctionName());
         FDN newNodeFunctionID;
@@ -88,10 +86,8 @@ public class TopologyMapElementTransformationServices {
             if (incomingNodeDetail.getFunctionName() == null) {
                 newNode.setNodeFunctionID(newNodeFunctionID.getToken());
             } else {
-                if (!newNodeFunctionID.getUnqualifiedRDN().getNameValue().contentEquals(incomingNodeDetail.getFunctionName())) {
-                    newNodeFunctionID.appendRDN(new RDN(incomingNodeDetail.getTopologyElementType().getNodeElementType(), incomingNodeDetail.getFunctionName()));
-                    newNode.setNodeFunctionID(newNodeFunctionID.getToken());
-                }
+                newNodeFunctionID.appendRDN(new RDN(incomingNodeDetail.getTopologyElementType().getNodeElementType(), incomingNodeDetail.getFunctionName()));
+                newNode.setNodeFunctionID(newNodeFunctionID.getToken());
             }
         }
         newNode.setVersion(incomingNodeDetail.getElementVersion());
@@ -109,9 +105,9 @@ public class TopologyMapElementTransformationServices {
                 NodeElementIdentifier containedNodeIdentifier = new NodeElementIdentifier(containedNodeFDN.getToken());
                 newNode.addContainedElement(containedNodeIdentifier);
                 if (newNode.getNodeFunctionID() == null) {
-                    registerDeploymentNodeAsTopologyNodeElement(containedNode, containedNodeIdentifier, parentNodeFunctionID);
+                    registerDeploymentNodeAsTopologyNodeElement(containedNode,  nodeIdentifier, parentNodeFunctionID);
                 } else {
-                    registerDeploymentNodeAsTopologyNodeElement(containedNode, containedNodeIdentifier, newNodeFunctionID.getToken());
+                    registerDeploymentNodeAsTopologyNodeElement(containedNode, nodeIdentifier, newNodeFunctionID.getToken());
                 }
             }
         }
@@ -155,11 +151,13 @@ public class TopologyMapElementTransformationServices {
         LOG.trace(".convertToEndpointElement(): Adding InternalPort Number --> {}", incomingEndpointDetail.getInternalPortNumber());
         newElement.setInternalPort(incomingEndpointDetail.getInternalPortNumber());
         LOG.trace(".convertToEndpointElement(): Adding ExposedPort Number --> {}", incomingEndpointDetail.getExternalPortNumber());
-        newElement.setInternalPort(incomingEndpointDetail.getInternalPortNumber());
+        newElement.setExposedPort(incomingEndpointDetail.getExternalPortNumber());
         LOG.trace(".convertToEndpointElement(): Adding isServer --> {}", incomingEndpointDetail.isIsServer());
         newElement.setServer(incomingEndpointDetail.isIsServer());
         LOG.trace(".convertToEndpointElement(): Adding Endpoint Type --> {}", incomingEndpointDetail.getEndpointType());
         newElement.setEndpointType(incomingEndpointDetail.getEndpointType());
+        LOG.trace(".convertToEndpointElement(): Adding Version --> {}", incomingEndpointDetail.getVersion());
+        newElement.setVersion(incomingEndpointDetail.getVersion());
         LOG.debug(".convertToEndpointElement(): Exit, newElement --> {}", newElement);
         return (newElement);
     }

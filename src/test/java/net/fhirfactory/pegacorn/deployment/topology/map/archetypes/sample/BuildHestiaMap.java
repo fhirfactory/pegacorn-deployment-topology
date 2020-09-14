@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.achetypes.sample;
+package net.fhirfactory.pegacorn.deployment.topology.map.archetypes.sample;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.fhirfactory.pegacorn.deployment.topology.map.achetypes.HestiaExternalisedService;
+import net.fhirfactory.pegacorn.deployment.topology.map.archetypes.HestiaPegacornSubsystem;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.NodeElementTypeEnum;
@@ -37,13 +37,25 @@ import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeE
  *
  * @author Mark A. Hunter
  */
-public class BuildHestiaMap extends HestiaExternalisedService {
+public class BuildHestiaMap extends HestiaPegacornSubsystem {
 
     String nodeHestia = "Hestia";
     String nodeHestiaAudit = "audit-hestia";
     String nodeHestiaDAM = "dam-hestia";
 
     @Override
+    public void buildSubsystemNode(DeploymentMapNodeElement solutionNode) {
+        DeploymentMapNodeElement hestiaNode = new DeploymentMapNodeElement();
+        hestiaNode.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
+        hestiaNode.setElementVersion("0.0.1");
+        hestiaNode.setInstanceName("Hestia");
+        hestiaNode.setFunctionName("Hestia");
+        hestiaNode.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
+        hestiaNode.setTopologyElementType(NodeElementTypeEnum.EXTERNALISED_SERVICE);
+        hestiaNode.getContainedElements().add(hestiaNode);
+        buildExternalisedServiceNode(hestiaNode);
+    }
+
     public void buildExternalisedServiceNode(DeploymentMapNodeElement hestiaNode) {
         DeploymentMapNodeElement hestiaDAMInstance = new DeploymentMapNodeElement();
         hestiaDAMInstance.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);

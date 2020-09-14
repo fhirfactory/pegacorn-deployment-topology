@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.achetypes.sample;
+package net.fhirfactory.pegacorn.deployment.topology.map.archetypes.sample;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.fhirfactory.pegacorn.deployment.topology.map.achetypes.FHIRPitExternalisedService;
+import net.fhirfactory.pegacorn.deployment.topology.map.archetypes.FHIRPitPegacornSubsystem;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.NodeElementTypeEnum;
@@ -37,13 +37,25 @@ import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeE
  *
  * @author Mark A. Hunter
  */
-public class BuildFHIRPitMap extends FHIRPitExternalisedService {
+public class BuildFHIRPitMap extends FHIRPitPegacornSubsystem {
 
     String nodeFHIRPitText = "FHIRPit";
     String nodeFHIRPitGen0Text = "gen0-fhirbreak";
     String NodeFHIRPitGen1Text = "gen1-fhirbreak";
 
     @Override
+    public void buildSubsystemNode(DeploymentMapNodeElement solutionNode) {
+        DeploymentMapNodeElement fhirpitNode = new DeploymentMapNodeElement();
+        fhirpitNode.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
+        fhirpitNode.setElementVersion("0.0.1");
+        fhirpitNode.setInstanceName("FHIRPit");
+        fhirpitNode.setFunctionName("FHIRPit");
+        fhirpitNode.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
+        fhirpitNode.setTopologyElementType(NodeElementTypeEnum.EXTERNALISED_SERVICE);
+        fhirpitNode.getContainedElements().add(fhirpitNode);
+        buildExternalisedServiceNode(fhirpitNode);
+    }
+
     public void buildExternalisedServiceNode(DeploymentMapNodeElement fhirpitNode) {
         DeploymentMapNodeElement fhirpitGen0ServiceNode = new DeploymentMapNodeElement();
         fhirpitGen0ServiceNode.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);

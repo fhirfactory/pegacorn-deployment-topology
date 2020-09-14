@@ -20,6 +20,8 @@ public class DeploymentMapEndpointElement {
 
     private boolean isServer;
     private boolean requiresEncryption;
+
+    private String version;
     
     private String internalDNSEntry;
     private String externalDNSEntry;
@@ -106,4 +108,11 @@ public class DeploymentMapEndpointElement {
         this.externalPortNumber = externalPortNumber;
     }
 
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
 }

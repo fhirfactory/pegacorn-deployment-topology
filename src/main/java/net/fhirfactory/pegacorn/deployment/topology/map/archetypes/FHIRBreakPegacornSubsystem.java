@@ -22,15 +22,15 @@
  * THE SOFTWARE.
  */
 
-package net.fhirfactory.pegacorn.deployment.topology.map.achetypes;
+package net.fhirfactory.pegacorn.deployment.topology.map.archetypes;
 
-import net.fhirfactory.pegacorn.deployment.topology.map.achetypes.common.ExternalisedService;
+import net.fhirfactory.pegacorn.deployment.topology.map.archetypes.common.PegacornSubsystem;
 
 /**
  * 
  * @author Mark A Hunter
  *
  */
-public abstract class FHIRBreakExternalisedService extends ExternalisedService {
+public abstract class FHIRBreakPegacornSubsystem extends PegacornSubsystem {
 
 }

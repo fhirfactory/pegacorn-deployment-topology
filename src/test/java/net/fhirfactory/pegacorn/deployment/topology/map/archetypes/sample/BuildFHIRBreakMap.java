@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.achetypes.sample;
+package net.fhirfactory.pegacorn.deployment.topology.map.archetypes.sample;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.fhirfactory.pegacorn.deployment.topology.map.achetypes.FHIRBreakExternalisedService;
+import net.fhirfactory.pegacorn.deployment.topology.map.archetypes.FHIRBreakPegacornSubsystem;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.EndpointElementTypeEnum;
@@ -39,13 +39,25 @@ import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeE
  *
  * @author Mark A. Hunter
  */
-public class BuildFHIRBreakMap extends FHIRBreakExternalisedService {
+public class BuildFHIRBreakMap extends FHIRBreakPegacornSubsystem {
 
     String nodeFHIRBreak = "FHIRBreak";
     String nodeFHIRBreakGen0 = "gen0-fhirbreak";
     String nodeFHIRBreakGen1 = "gen1-fhirbreak";
 
     @Override
+    public void buildSubsystemNode(DeploymentMapNodeElement solutionNode) {
+        DeploymentMapNodeElement fhirbreakNode = new DeploymentMapNodeElement();
+        fhirbreakNode.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
+        fhirbreakNode.setElementVersion("0.0.1");
+        fhirbreakNode.setInstanceName("FHIRBreak");
+        fhirbreakNode.setFunctionName("FHIRBreak");
+        fhirbreakNode.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
+        fhirbreakNode.setTopologyElementType(NodeElementTypeEnum.EXTERNALISED_SERVICE);
+        fhirbreakNode.getContainedElements().add(fhirbreakNode);
+        buildExternalisedServiceNode(fhirbreakNode);
+    }
+
     public void buildExternalisedServiceNode(DeploymentMapNodeElement fhirbreakNode) {
         DeploymentMapNodeElement fhirBreakGen0Instance = new DeploymentMapNodeElement();
         fhirBreakGen0Instance.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);

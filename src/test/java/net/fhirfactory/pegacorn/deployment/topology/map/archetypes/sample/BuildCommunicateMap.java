@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.achetypes.sample;
+package net.fhirfactory.pegacorn.deployment.topology.map.archetypes.sample;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import net.fhirfactory.pegacorn.deployment.topology.map.achetypes.CommunicateExternalisedService;
+import net.fhirfactory.pegacorn.deployment.topology.map.archetypes.CommunicatePegacornSubsystem;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.EndpointElementTypeEnum;
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Mark A. Hunter
  */
-public class BuildCommunicateMap extends CommunicateExternalisedService {
+public class BuildCommunicateMap extends CommunicatePegacornSubsystem {
     private static final Logger LOG = LoggerFactory.getLogger(BuildCommunicateMap.class);
 
     String nodeCommunicate = "Comunicate";
@@ -50,7 +50,22 @@ public class BuildCommunicateMap extends CommunicateExternalisedService {
     String nodeEcho = "Communicate-Echo";
     String nodeIris = "Communicate-Iris";
 
+
     @Override
+    public void buildSubsystemNode(DeploymentMapNodeElement solutionNode) {
+        LOG.debug(".buildSubsystemNode(): Entry");
+        DeploymentMapNodeElement communicateNode = new DeploymentMapNodeElement();
+        communicateNode.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
+        communicateNode.setElementVersion("0.0.1");
+        communicateNode.setInstanceName("Communicate");
+        communicateNode.setFunctionName("Communicate");
+        communicateNode.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
+        communicateNode.setTopologyElementType(NodeElementTypeEnum.EXTERNALISED_SERVICE);
+        LOG.trace(".buildSubsystemNode(): Adding communicateNode (DeploymentMapNodeElement) --> {}", communicateNode);
+        communicateNode.getContainedElements().add(communicateNode);
+        buildExternalisedServiceNode(communicateNode);
+    }
+
     public void buildExternalisedServiceNode(DeploymentMapNodeElement communicateNode) {
         LOG.debug(".buildExternalisedServiceNode(): Entry");
         DeploymentMapNodeElement echoServer = new DeploymentMapNodeElement();

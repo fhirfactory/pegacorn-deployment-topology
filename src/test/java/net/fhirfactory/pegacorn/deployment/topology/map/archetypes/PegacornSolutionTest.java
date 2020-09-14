@@ -1,7 +1,7 @@
-package net.fhirfactory.pegacorn.deployment.topology.map.achetypes;
+package net.fhirfactory.pegacorn.deployment.topology.map.archetypes;
 
 import net.fhirfactory.pegacorn.deployment.topology.manager.DeploymentTopologyIM;
-import net.fhirfactory.pegacorn.deployment.topology.map.achetypes.sample.TestMap;
+import net.fhirfactory.pegacorn.deployment.topology.map.archetypes.sample.TestMap;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.NodeElementIdentifier;
 import org.jboss.arquillian.container.test.api.Deployment;

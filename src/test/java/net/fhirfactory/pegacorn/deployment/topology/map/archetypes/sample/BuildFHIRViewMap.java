@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirfactory.pegacorn.deployment.topology.map.achetypes.sample;
+package net.fhirfactory.pegacorn.deployment.topology.map.archetypes.sample;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.fhirfactory.pegacorn.deployment.topology.map.achetypes.FHIRViewExternalisedService;
+import net.fhirfactory.pegacorn.deployment.topology.map.archetypes.FHIRViewPegacornSubsystem;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ConcurrencyModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.resilience.mode.ResilienceModeEnum;
 import net.fhirfactory.pegacorn.petasos.model.topology.NodeElementTypeEnum;
@@ -37,13 +37,25 @@ import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeE
  *
  * @author Mark A. Hunter
  */
-public class BuildFHIRViewMap extends FHIRViewExternalisedService {
+public class BuildFHIRViewMap extends FHIRViewPegacornSubsystem {
 
     String nodeFHIRView = "FHIRView";
     String nodeFHIRViewGen0 = "gen0-fhirview";
     String nodeFHIRViewGen1 = "gen1-fhirview";
 
     @Override
+    public void buildSubsystemNode(DeploymentMapNodeElement solutionNode) {
+        DeploymentMapNodeElement fhirviewNode = new DeploymentMapNodeElement();
+        fhirviewNode.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
+        fhirviewNode.setElementVersion("0.0.1");
+        fhirviewNode.setInstanceName("FHIRView");
+        fhirviewNode.setFunctionName("FHIRView");
+        fhirviewNode.setResilienceMode(ResilienceModeEnum.RESILIENCE_MODE_STANDALONE);
+        fhirviewNode.setTopologyElementType(NodeElementTypeEnum.EXTERNALISED_SERVICE);
+        fhirviewNode.getContainedElements().add(fhirviewNode);
+        buildExternalisedServiceNode(fhirviewNode);
+    }
+
     public void buildExternalisedServiceNode(DeploymentMapNodeElement fhirviewNode) {
         DeploymentMapNodeElement fhirvewGen0Node = new DeploymentMapNodeElement();
         fhirvewGen0Node.setConcurrencyMode(ConcurrencyModeEnum.CONCURRENCY_MODE_STANDALONE);
