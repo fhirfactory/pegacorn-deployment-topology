@@ -78,7 +78,7 @@ public abstract class PegacornSubsystem {
     }
 
     public String getDNSEntry(String defaultValue) {
-        return getProperty("DNS_ENTRY", defaultValue);
+        return getProperty("DNS_ENTRY", getDNSEntryInsideKubernetes(defaultValue));
     }
 
     public String getDNSEntryInsideKubernetes(String defaultValue) {
