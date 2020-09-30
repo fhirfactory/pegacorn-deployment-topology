@@ -50,7 +50,7 @@ public class EdgeMessagingPortsCreator {
         }
     }
 
-    public void addEdgeForwarderPorts(DeploymentMapNodeElement processingPlant, Integer offset, String version){
+    public void addEdgeForwarders(DeploymentMapNodeElement processingPlant, String version){
         String[] portNames = {
                 "Port:Edge-Forward-Foundation-Terminology",
                 "Port:Edge-Forward-Foundation-Other",

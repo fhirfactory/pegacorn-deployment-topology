@@ -1,7 +1,5 @@
-target/
+/target/
 *.iml
-.settings/
-.project/
-.classpath/
 .classpath
 .project
+/.settings
