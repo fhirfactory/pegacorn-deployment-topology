@@ -29,6 +29,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import net.fhirfactory.pegacorn.petasos.model.wup.WUPFunctionToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -206,11 +207,11 @@ public class DeploymentTopologyIM {
      * @param wupID The unique (FDNToken) of the Work Unit Processor (WUP)
      * @return An unambiguous descriptor of the functional processing capability of the WUP (NodeElementFunctionToken).
      */
-    public NodeElementFunctionToken getWUPFunctionToken(WUPIdentifier wupID) {
+    public WUPFunctionToken getWUPFunctionToken(WUPIdentifier wupID) {
         LOG.debug(".getWUPFunctionToken(): Entry, wupID --> {}", wupID);
         NodeElementIdentifier nodeID = new NodeElementIdentifier(wupID);
         NodeElement node = topologyManager.getNode(nodeID);
-        NodeElementFunctionToken functionToken = node.getNodeFunctionToken();
+        WUPFunctionToken functionToken = new WUPFunctionToken(node.getNodeFunctionToken());
         LOG.debug(".getWUPFunctionToken(): Exit, functionToken --> {}", functionToken);
         return (functionToken);
     }
