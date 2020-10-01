@@ -52,11 +52,7 @@ public abstract class PegacornSubsystem {
     }
 
     public String getMandatoryProperty(String propertyName) {
-        String value = getProperty(propertyName, StringUtils.EMPTY);
-        if (StringUtils.isBlank(value)) {
-            throw new IllegalStateException("A value for property " + propertyName + " must be provided");
-        }
-        return value;
+        return PegacornProperties.getMandatoryProperty(propertyName);        
     }
         
     /**
