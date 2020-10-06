@@ -94,20 +94,6 @@ public class PegacornSolutionTest {
     }
 
     @Test
-    public void specifyCommunicateExternalisedServices() {
-        LOG.debug(".specifyCommunicateExternalisedServices(): Entry");
-        NodeElementIdentifier retrieved_node = deployedTopologyIM.getProcessingPlantInstanceID("Matrix2FHIRServices", "0.0.1");
-        LOG.debug(".specifyCommunicateExternalisedServices(): retrieved_node (NodeElementIdentifier) --> {}", retrieved_node);
-    }
-
-    @Test
-    public void specifyMITaFExternalisedServices() {
-        LOG.debug(".specifyCommunicateExternalisedServices(): Entry");
-        NodeElementIdentifier retrieved_node = deployedTopologyIM.getProcessingPlantInstanceID("Matrix2FHIRServices", "0.0.1");
-        LOG.debug(".specifyCommunicateExternalisedServices(): retrieved_node (NodeElementIdentifier) --> {}", retrieved_node);
-    }
-
-    @Test
     public void specifyConnectedSystems() {
     }
 }

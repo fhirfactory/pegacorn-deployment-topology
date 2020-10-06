@@ -80,7 +80,7 @@ public abstract class SolutionDeploymentTopology implements DeploymentTopologyIn
         if (!isInitialised) {
             LOG.trace(".initialise(): Doing initialisation!");
             this.solutionNode = buildCoreSolution();
-            LOG.trace(".initialise(): Communicate Nodes added, Adding Connected System Nodes");
+            LOG.trace(".initialise(): Core Solution added, Adding Connected System Nodes");
             this.connectedSubsystems.addAll(specifyConnectedSystems());
             LOG.trace(".initialise(): Connected System Nodes added, Installing Pegacorn Solution into Topology Server");
             topologyMapService.registerDeploymentNodeAsTopologyNodeElement(this.getSolution(), null, null);

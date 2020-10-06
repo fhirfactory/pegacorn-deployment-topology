@@ -147,7 +147,7 @@ public class TopologyMapElementTransformationServices {
         LOG.trace(".convertToEndpointElement(): Adding Friendly Name --> {}", incomingEndpointDetail.getFriendlyName());
         newElement.setFriendlyName(incomingEndpointDetail.getFriendlyName());
         LOG.trace(".convertToEndpointElement(): Adding Hostname --> {}", incomingEndpointDetail.getInternalDNSEntry());
-        newElement.setHostname(resolveHostname(incomingEndpointDetail.getInternalDNSEntry()));
+        newElement.setHostname(resolveHostname(incomingEndpointDetail.getExternalDNSEntry()));
         LOG.trace(".convertToEndpointElement(): Adding InternalPort Number --> {}", incomingEndpointDetail.getInternalPortNumber());
         newElement.setInternalPort(incomingEndpointDetail.getInternalPortNumber());
         LOG.trace(".convertToEndpointElement(): Adding ExposedPort Number --> {}", incomingEndpointDetail.getExternalPortNumber());

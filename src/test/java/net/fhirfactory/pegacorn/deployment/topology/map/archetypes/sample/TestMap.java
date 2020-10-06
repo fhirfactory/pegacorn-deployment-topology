@@ -50,16 +50,6 @@ public class TestMap extends SolutionDeploymentTopology {
 
     }
 
-    protected void specifyCommunicateExternalisedServices(DeploymentMapNodeElement subsystem) {
-        BuildCommunicateMap communicateBuilder = new BuildCommunicateMap();
-        communicateBuilder.buildExternalisedServiceNode(subsystem);
-    }
-
-    protected void specifyMITaFExternalisedServices(DeploymentMapNodeElement subsystem) {
-        BuildMITaFMap mitafBuilder = new BuildMITaFMap();
-        mitafBuilder.buildExternalisedServiceNode(subsystem);
-
-    }
 
     protected void specifyFHIRPlaceExternalisedServices(DeploymentMapNodeElement subsystem) {
         BuildFHIRPlaceMap fhirPlaceBuilder = new BuildFHIRPlaceMap();
