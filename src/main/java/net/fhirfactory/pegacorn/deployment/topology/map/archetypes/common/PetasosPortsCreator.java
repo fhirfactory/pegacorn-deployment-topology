@@ -27,7 +27,7 @@ public class PetasosPortsCreator {
             DeploymentMapEndpointElement receiver = new DeploymentMapEndpointElement();
             receiver.setEndpointInstanceID(portName);
             receiver.setEndpointFunctionID(portName);
-            receiver.setEndpointType(EndpointElementTypeEnum.API);
+            receiver.setEndpointType(EndpointElementTypeEnum.API_SERVER);
             receiver.setExternalDNSEntry("___");
             receiver.setExternalPortNumber(Integer.toString(portValue));
             receiver.setIsServer(true);

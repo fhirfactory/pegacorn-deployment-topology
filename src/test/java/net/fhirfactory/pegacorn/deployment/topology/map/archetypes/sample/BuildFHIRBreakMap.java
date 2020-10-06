@@ -92,7 +92,7 @@ public class BuildFHIRBreakMap extends FHIRBreakPegacornSubsystem {
         DeploymentMapEndpointElement endpointMatrixNotificationReceiver = new DeploymentMapEndpointElement();
         endpointMatrixNotificationReceiver.setEndpointInstanceID("TechOneAPI");
         endpointMatrixNotificationReceiver.setEndpointFunctionID("TechOneAPI");
-        endpointMatrixNotificationReceiver.setEndpointType(EndpointElementTypeEnum.API);
+        endpointMatrixNotificationReceiver.setEndpointType(EndpointElementTypeEnum.API_SERVER);
         endpointMatrixNotificationReceiver.setExternalDNSEntry("aether-fhirbreak-technone");
         endpointMatrixNotificationReceiver.setExternalPortNumber("32410");
         endpointMatrixNotificationReceiver.setIsServer(true);
@@ -136,7 +136,7 @@ public class BuildFHIRBreakMap extends FHIRBreakPegacornSubsystem {
         DeploymentMapEndpointElement endpointTechoneAPIPort = new DeploymentMapEndpointElement();
         endpointTechoneAPIPort.setEndpointInstanceID("TechnologyOneAPI");
         endpointTechoneAPIPort.setEndpointFunctionID("MatrixNotificationsReceiver");
-        endpointTechoneAPIPort.setEndpointType(EndpointElementTypeEnum.API);
+        endpointTechoneAPIPort.setEndpointType(EndpointElementTypeEnum.API_SERVER);
         endpointTechoneAPIPort.setExternalDNSEntry("___");
         endpointTechoneAPIPort.setExternalPortNumber("12410");
         endpointTechoneAPIPort.setInternalPortNumber("8443");
@@ -147,7 +147,7 @@ public class BuildFHIRBreakMap extends FHIRBreakPegacornSubsystem {
         DeploymentMapEndpointElement endpointPetasosTopologySync = new DeploymentMapEndpointElement();
         endpointPetasosTopologySync.setEndpointInstanceID("PetasosTopologySyncSvr");
         endpointPetasosTopologySync.setEndpointFunctionID("PetasosTopologySyncSvr");
-        endpointPetasosTopologySync.setEndpointType(EndpointElementTypeEnum.API);
+        endpointPetasosTopologySync.setEndpointType(EndpointElementTypeEnum.API_SERVER);
         endpointPetasosTopologySync.setExternalDNSEntry("___");
         endpointPetasosTopologySync.setExternalPortNumber("12860");
         endpointPetasosTopologySync.setInternalPortNumber("12860");
@@ -158,7 +158,7 @@ public class BuildFHIRBreakMap extends FHIRBreakPegacornSubsystem {
         DeploymentMapEndpointElement endpointPetasosParcelSync = new DeploymentMapEndpointElement();
         endpointPetasosParcelSync.setEndpointInstanceID("PetasosResilienceParcelSyncSvr");
         endpointPetasosParcelSync.setEndpointFunctionID("PetasosResilienceParcelSyncSvr");
-        endpointPetasosParcelSync.setEndpointType(EndpointElementTypeEnum.API);
+        endpointPetasosParcelSync.setEndpointType(EndpointElementTypeEnum.API_SERVER);
         endpointPetasosParcelSync.setExternalDNSEntry("___");
         endpointPetasosParcelSync.setExternalPortNumber("12861");
         endpointPetasosParcelSync.setInternalPortNumber("12861");
@@ -169,7 +169,7 @@ public class BuildFHIRBreakMap extends FHIRBreakPegacornSubsystem {
         DeploymentMapEndpointElement endpointPetasosHeartbeatSync = new DeploymentMapEndpointElement();
         endpointPetasosHeartbeatSync.setEndpointInstanceID("PetasosHeartbeatSvr");
         endpointPetasosHeartbeatSync.setEndpointFunctionID("PetasosHeartbeatSvr");
-        endpointPetasosHeartbeatSync.setEndpointType(EndpointElementTypeEnum.API);
+        endpointPetasosHeartbeatSync.setEndpointType(EndpointElementTypeEnum.API_SERVER);
         endpointPetasosHeartbeatSync.setExternalDNSEntry("___");
         endpointPetasosHeartbeatSync.setExternalPortNumber("12862");
         endpointPetasosHeartbeatSync.setInternalPortNumber("12862");
@@ -223,7 +223,7 @@ public class BuildFHIRBreakMap extends FHIRBreakPegacornSubsystem {
         DeploymentMapEndpointElement endpointTechOneAPIReceiver = new DeploymentMapEndpointElement();
         endpointTechOneAPIReceiver.setEndpointInstanceID("TechologyOneAPIServerPort");
         endpointTechOneAPIReceiver.setEndpointFunctionID("TechologyOneAPIServerPort");
-        endpointTechOneAPIReceiver.setEndpointType(EndpointElementTypeEnum.API);
+        endpointTechOneAPIReceiver.setEndpointType(EndpointElementTypeEnum.API_SERVER);
         endpointTechOneAPIReceiver.setExternalDNSEntry("Inherited");
         endpointTechOneAPIReceiver.setExternalPortNumber("Default");
         endpointTechOneAPIReceiver.setIsServer(true);

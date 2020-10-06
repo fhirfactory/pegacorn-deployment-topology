@@ -106,7 +106,7 @@ public class BuildLadonMap extends LadonExternalisedServices {
         DeploymentMapEndpointElement endpointPetasosTopologySync = new DeploymentMapEndpointElement();
         endpointPetasosTopologySync.setEndpointInstanceID("PetasosTopologySyncSvr");
         endpointPetasosTopologySync.setEndpointFunctionID("PetasosTopologySyncSvr");
-        endpointPetasosTopologySync.setEndpointType(EndpointElementTypeEnum.API);
+        endpointPetasosTopologySync.setEndpointType(EndpointElementTypeEnum.API_SERVER);
         endpointPetasosTopologySync.setExternalDNSEntry("___");
         endpointPetasosTopologySync.setExternalPortNumber("10810");
         endpointPetasosTopologySync.setInternalPortNumber("10810");
@@ -117,7 +117,7 @@ public class BuildLadonMap extends LadonExternalisedServices {
         DeploymentMapEndpointElement endpointPetasosParcelSync = new DeploymentMapEndpointElement();
         endpointPetasosParcelSync.setEndpointInstanceID("PetasosTopologySyncSvr");
         endpointPetasosParcelSync.setEndpointFunctionID("PetasosTopologySyncSvr");
-        endpointPetasosParcelSync.setEndpointType(EndpointElementTypeEnum.API);
+        endpointPetasosParcelSync.setEndpointType(EndpointElementTypeEnum.API_SERVER);
         endpointPetasosParcelSync.setExternalDNSEntry("___");
         endpointPetasosParcelSync.setExternalPortNumber("10811");
         endpointPetasosParcelSync.setInternalPortNumber("10811");
@@ -128,7 +128,7 @@ public class BuildLadonMap extends LadonExternalisedServices {
         DeploymentMapEndpointElement endpointPetasosHeartbeatSync = new DeploymentMapEndpointElement();
         endpointPetasosHeartbeatSync.setEndpointInstanceID("PetasosTopologySyncSvr");
         endpointPetasosHeartbeatSync.setEndpointFunctionID("PetasosTopologySyncSvr");
-        endpointPetasosHeartbeatSync.setEndpointType(EndpointElementTypeEnum.API);
+        endpointPetasosHeartbeatSync.setEndpointType(EndpointElementTypeEnum.API_SERVER);
         endpointPetasosHeartbeatSync.setExternalDNSEntry("___");
         endpointPetasosHeartbeatSync.setExternalPortNumber("10812");
         endpointPetasosHeartbeatSync.setInternalPortNumber("10812");
