@@ -98,7 +98,7 @@ public class DeploymentTopologyIM {
         }
         Map<Integer, NodeElementIdentifier> nodeSet = topologyManager.getNodesWithMatchinUnqualifiedInstanceName(processingPlantName);
         if (nodeSet.isEmpty()) {
-            throw (new IllegalArgumentException("getProcessingPlantInstanceID(): Not such processingPlantName in Topology Map"));
+            throw (new IllegalArgumentException("getProcessingPlantInstanceID(): Not such processingPlantName " + processingPlantName + " in Topology Map"));
         }
         int nodeSetSize = nodeSet.size();
         if(LOG.isTraceEnabled()){

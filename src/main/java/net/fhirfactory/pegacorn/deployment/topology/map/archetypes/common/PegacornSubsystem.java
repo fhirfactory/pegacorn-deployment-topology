@@ -26,7 +26,10 @@ package net.fhirfactory.pegacorn.deployment.topology.map.archetypes.common;
 
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
+
 import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeElement;
+import net.fhirfactory.pegacorn.util.PegacornProperties;
 
 /**
  * 
@@ -37,5 +40,96 @@ public abstract class PegacornSubsystem {
 
     abstract public void buildSubsystemNode(DeploymentMapNodeElement subsystem);
     abstract public Set<DeploymentMapNodeElement> buildConnectedSystemSet();
+    
+    private static final Integer DEFAULT_EXTERNAL_PORT = Integer.valueOf(443);
    
+    public String getProperty(String propertyName, String defaultValue) {
+        return PegacornProperties.getProperty(propertyName, defaultValue);        
+    }
+    
+    public Integer getProperty(String propertyName, Integer defaultValue) {
+        return PegacornProperties.getIntegerProperty(propertyName, defaultValue);        
+    }
+
+    public String getMandatoryProperty(String propertyName) {
+        return PegacornProperties.getMandatoryProperty(propertyName);        
+    }
+        
+    /**
+     * @param defaultValue
+     * @return the external to ACT Health DNS entry
+     */
+    public String getExternalDNSEntry(String defaultValue) {
+        return getProperty("EXTERNAL_DNS_ENTRY", getDNSEntry(defaultValue));
+    }
+
+    /**
+     * @return the external to ACT Health port
+     */
+    public Integer getExternalPort() {
+        return getExternalPort(DEFAULT_EXTERNAL_PORT);
+    }
+    public Integer getExternalPort(Integer defaultValue) {
+        return getProperty("EXTERNAL_PORT", defaultValue);
+    }
+
+    public String getDNSEntry(String defaultValue) {
+        return getProperty("DNS_ENTRY", getDNSEntryInsideKubernetes(defaultValue));
+    }
+
+    public String getDNSEntryInsideKubernetes(String defaultValue) {
+        String value = getProperty("KUBERNETES_SERVICE_NAME", StringUtils.EMPTY);
+        if (StringUtils.isBlank(value)) {
+            return defaultValue;
+        }                
+        return value + "." + getMandatoryProperty("KUBERNETES_NAMESPACE");
+    }
+
+    /**
+     * @param defaultValue
+     * @return the exposed kubernetes service port
+     */
+    public Integer getBasePort(Integer defaultValue) {
+        return getProperty("BASE_PORT", defaultValue);
+    }
+    
+    /**
+     * @param defaultValue
+     * @return the internal port used on the Pod/Container
+     */
+    public Integer getBasePortInsidePod(Integer defaultValue) {
+        return getProperty("BASE_PORT_INSIDE_POD", getEdgeReceiverBasePort(defaultValue));
+    }
+        
+    /**
+     * @param defaultValue
+     * @return the exposed kubernetes service port
+     */
+    public Integer getEdgeReceiverBasePort(Integer defaultValue) {
+        return getProperty("EDGE_RECEIVER_BASE_PORT", defaultValue);
+    }
+    
+    /**
+     * @param defaultValue
+     * @return the internal port used on the Pod/Container
+     */
+    public Integer getEdgeReceiverBasePortInsidePod(Integer defaultValue) {
+        return getProperty("EDGE_RECEIVER_BASE_PORT_INSIDE_POD", getEdgeReceiverBasePort(defaultValue));
+    }
+    
+    /**
+     * @param defaultValue
+     * @return the exposed kubernetes service port
+     */
+    public Integer getPetasosBasePort(Integer defaultValue) {
+        return getProperty("PETASOS_BASE_PORT", defaultValue);
+    }
+    
+    /**
+     * @param defaultValue
+     * @return the internal port used on the Pod/Container
+     */
+    public Integer getPetasosBasePortInsidePod(Integer defaultValue) {
+        return getProperty("PETASOS_BASE_PORT_INSIDE_POD", getPetasosBasePort(defaultValue));
+    }    
 }
