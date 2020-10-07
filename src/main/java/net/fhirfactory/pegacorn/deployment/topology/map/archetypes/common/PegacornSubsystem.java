@@ -40,9 +40,34 @@ public abstract class PegacornSubsystem {
 
     abstract public void buildSubsystemNode(DeploymentMapNodeElement subsystem);
     abstract public Set<DeploymentMapNodeElement> buildConnectedSystemSet();
+
+    protected String getDefaultDNSEntry() {
+        throw new IllegalStateException("Subclass must override this method to refer to DNS entries");        
+    }
+    protected int getDefaultBasePort() {
+        throw new IllegalStateException("Subclass must override this method to use applciation ports");                
+    }
+    protected int getDefaultPetasosBasePort() {
+        throw new IllegalStateException("Subclass must override this method to use petasos ports");                        
+    }
+    protected int getDefaultEdgeReceiverBasePort() {
+        throw new IllegalStateException("Subclass must override this method to use edge receiver ports");                                
+    }
     
     private static final Integer DEFAULT_EXTERNAL_PORT = Integer.valueOf(443);
-   
+
+    protected int getDefaultBasePortInsidePod() {
+        return getDefaultBasePort();
+    }
+    
+    protected int getDefaultPetasosBasePortInsidePod() {
+        return getDefaultPetasosBasePort();
+    }
+    
+    protected int getDefaultEdgeReceiverBasePortInsidePod() {
+        return getDefaultEdgeReceiverBasePort();
+    }       
+    
     public String getProperty(String propertyName, String defaultValue) {
         return PegacornProperties.getProperty(propertyName, defaultValue);        
     }
@@ -86,50 +111,62 @@ public abstract class PegacornSubsystem {
     }
 
     /**
-     * @param defaultValue
+     * @param offset the port offset from the base port
      * @return the exposed kubernetes service port
      */
-    public Integer getBasePort(Integer defaultValue) {
+    protected Integer getPort(int offset) {
+        return getBasePort(getDefaultBasePort()) + offset;
+    }
+    
+    private Integer getBasePort(Integer defaultValue) {
         return getProperty("BASE_PORT", defaultValue);
     }
     
     /**
-     * @param defaultValue
+     * @param offset the port offset from the base port
      * @return the internal port used on the Pod/Container
      */
-    public Integer getBasePortInsidePod(Integer defaultValue) {
-        return getProperty("BASE_PORT_INSIDE_POD", getEdgeReceiverBasePort(defaultValue));
+    protected Integer getPortInsidePod(int offset) {
+        return getProperty("BASE_PORT_INSIDE_POD", getBasePort(getDefaultBasePortInsidePod())) + offset;
     }
-        
+
     /**
-     * @param defaultValue
+     * @param offset the port offset from the base port
      * @return the exposed kubernetes service port
      */
-    public Integer getEdgeReceiverBasePort(Integer defaultValue) {
+    protected Integer getEdgeReceiverPort(int offset) {
+        return getEdgeReceiverBasePort(getDefaultEdgeReceiverBasePort()) + offset;
+    }
+        
+    private Integer getEdgeReceiverBasePort(Integer defaultValue) {
         return getProperty("EDGE_RECEIVER_BASE_PORT", defaultValue);
     }
     
     /**
-     * @param defaultValue
+     * @param offset the port offset from the base port
      * @return the internal port used on the Pod/Container
      */
-    public Integer getEdgeReceiverBasePortInsidePod(Integer defaultValue) {
-        return getProperty("EDGE_RECEIVER_BASE_PORT_INSIDE_POD", getEdgeReceiverBasePort(defaultValue));
+    protected Integer getEdgeReceiverPortInsidePod(int offset) {
+        return getProperty("EDGE_RECEIVER_BASE_PORT_INSIDE_POD", getEdgeReceiverBasePort(getDefaultEdgeReceiverBasePortInsidePod())) + offset;
     }
     
     /**
-     * @param defaultValue
+     * @param offset the port offset from the base port
      * @return the exposed kubernetes service port
      */
-    public Integer getPetasosBasePort(Integer defaultValue) {
+    protected Integer getPetasosPort(int offset) {
+        return getPetasosBasePort(getDefaultPetasosBasePort()) + offset;
+    }
+    
+    private Integer getPetasosBasePort(Integer defaultValue) {
         return getProperty("PETASOS_BASE_PORT", defaultValue);
     }
     
     /**
-     * @param defaultValue
+     * @param offset the port offset from the base port
      * @return the internal port used on the Pod/Container
      */
-    public Integer getPetasosBasePortInsidePod(Integer defaultValue) {
-        return getProperty("PETASOS_BASE_PORT_INSIDE_POD", getPetasosBasePort(defaultValue));
-    }    
+    protected Integer getPetasosPortInsidePod(int offset) {
+        return getProperty("PETASOS_BASE_PORT_INSIDE_POD", getPetasosBasePort(getDefaultPetasosBasePortInsidePod())) + offset;
+    }
 }
