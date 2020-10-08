@@ -68,16 +68,20 @@ public abstract class PegacornSubsystem {
         return getDefaultEdgeReceiverBasePort();
     }       
     
+    private String getPropertyNameInItsNameSpace(String propertyName) {
+        return getDefaultDNSEntry().replace('-', '_').replace('.',  '_').toUpperCase() + "_" + propertyName;
+    }
+    
     public String getProperty(String propertyName, String defaultValue) {
-        return PegacornProperties.getProperty(propertyName, defaultValue);        
+        return PegacornProperties.getProperty(getPropertyNameInItsNameSpace(propertyName), defaultValue);        
     }
     
     public Integer getProperty(String propertyName, Integer defaultValue) {
-        return PegacornProperties.getIntegerProperty(propertyName, defaultValue);        
+        return PegacornProperties.getIntegerProperty(getPropertyNameInItsNameSpace(propertyName), defaultValue);        
     }
 
     public String getMandatoryProperty(String propertyName) {
-        return PegacornProperties.getMandatoryProperty(propertyName);        
+        return PegacornProperties.getMandatoryProperty(getPropertyNameInItsNameSpace(propertyName));        
     }
         
     /**
