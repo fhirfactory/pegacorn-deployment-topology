@@ -69,7 +69,7 @@ public abstract class PegacornSubsystem {
     }       
     
     private String getPropertyNameInItsNameSpace(String propertyName) {
-        return getDefaultDNSEntry().replace('-', '_').replace('.',  '_').toUpperCase() + "_" + propertyName;
+        return getDefaultDNSEntry() + "_" + propertyName;
     }
     
     public String getProperty(String propertyName, String defaultValue) {

@@ -17,6 +17,27 @@
     <name>Pegacorn :: Deployment :: Topology</name>
     <description>The (network and application) Topology Configuration of a Pegacorn deployment system</description>
 
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <prerequisites>
+        <maven>3.5.0</maven>
+    </prerequisites>
+
+    <developers>
+        <developer>
+            <id>mahunter</id>
+        </developer>
+        <developer>
+            <id>jrschremmer</id>
+        </developer>
+    </developers>
+
     <properties>
         <JBOSS_HOME>${project.basedir}/target/wildfly-${version-org.wildfly}</JBOSS_HOME>
     </properties>
@@ -231,6 +252,7 @@
                 </dependency>
             </dependencies>
             <build>
+              <pluginManagement>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -297,6 +319,7 @@
                         </configuration>
                     </plugin>
                 </plugins>
+              </pluginManagement>
             </build>
         </profile>
     </profiles>
