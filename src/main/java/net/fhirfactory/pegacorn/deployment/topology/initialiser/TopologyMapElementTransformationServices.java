@@ -159,6 +159,7 @@ public class TopologyMapElementTransformationServices {
         LOG.trace(".convertToEndpointElement(): Adding Version --> {}", incomingEndpointDetail.getVersion());
         newElement.setVersion(incomingEndpointDetail.getVersion());
         LOG.debug(".convertToEndpointElement(): Exit, newElement --> {}", newElement);
+        newElement.setUtilisingSecurity(incomingEndpointDetail.isRequiresEncryption());
         return (newElement);
     }
     
