@@ -22,21 +22,23 @@
 package net.fhirfactory.pegacorn.deployment.topology.initialiser;
 
 import java.util.Iterator;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.fhirfactory.pegacorn.common.model.FDN;
 import net.fhirfactory.pegacorn.common.model.FDNToken;
 import net.fhirfactory.pegacorn.common.model.RDN;
+import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapEndpointElement;
+import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeElement;
 import net.fhirfactory.pegacorn.petasos.model.topology.EndpointElement;
 import net.fhirfactory.pegacorn.petasos.model.topology.EndpointElementIdentifier;
 import net.fhirfactory.pegacorn.petasos.model.topology.NodeElement;
 import net.fhirfactory.pegacorn.petasos.model.topology.NodeElementIdentifier;
-import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapEndpointElement;
-import net.fhirfactory.pegacorn.deployment.topology.map.model.DeploymentMapNodeElement;
 import net.fhirfactory.pegacorn.petasos.topology.manager.TopologyIM;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -159,6 +161,7 @@ public class TopologyMapElementTransformationServices {
         LOG.trace(".convertToEndpointElement(): Adding Version --> {}", incomingEndpointDetail.getVersion());
         newElement.setVersion(incomingEndpointDetail.getVersion());
         LOG.debug(".convertToEndpointElement(): Exit, newElement --> {}", newElement);
+        newElement.setUtilisingSecurity(incomingEndpointDetail.isRequiresEncryption());
         return (newElement);
     }
     
