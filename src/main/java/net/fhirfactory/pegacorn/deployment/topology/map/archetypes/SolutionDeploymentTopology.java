@@ -90,7 +90,7 @@ public abstract class SolutionDeploymentTopology implements DeploymentTopologyIn
             }
             LOG.trace(".initialise(): Installed Connected Systems to Topology Server, done...");
             this.isInitialised = true;
-            if(LOG.isDebugEnabled()){
+            if(LOG.isWarnEnabled()){
                 printTopologySummary();
             }
         }
@@ -171,12 +171,12 @@ public abstract class SolutionDeploymentTopology implements DeploymentTopologyIn
     }
 
     private void printTopologySummary(){
-        LOG.debug(".printTopologySummary(): Entry");
+        LOG.warn(".printTopologySummary(): Entry");
         Set<NodeElement> nodeSet = topologyServer.getNodeSet();
         for(NodeElement node: nodeSet){
-            LOG.debug("Node: {}", node.getNodeInstanceID().toString());
+            LOG.warn("Node: Type {}, InstanceId {}", node.getNodeArchetype() ,node.getNodeInstanceID().toTag());
             for(EndpointElementIdentifier endpoint: node.getEndpoints()){
-                LOG.debug("      Endpoint: {}", endpoint);
+                LOG.warn("      Endpoint: {}", endpoint);
             }
         }
     }
